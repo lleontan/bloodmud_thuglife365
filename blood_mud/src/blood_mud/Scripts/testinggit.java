@@ -1,4 +1,4 @@
-package blood_mud;
+package blood_mud.Scripts;
 
 public class testinggit {
 
