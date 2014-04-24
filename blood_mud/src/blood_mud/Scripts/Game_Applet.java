@@ -12,8 +12,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 	static int playerlives=10;
 	public ArrayList cosmeticList=new ArrayList();			//this is our arraylist of cosmetic battlefield damage(blown up trees)
 	public ArrayList tempCosemeticList=new ArrayList();		//arraylist of temporary battle damage(bullet holes, explosions)
-	public ArrayList playerForces=new ArrayList();			//arraylist of all the soldiers and vehicles under player control
-	public ArrayList aiForces=new ArrayList();				//arraylist of all the soldiers and vehicles under ai control
+	public ArrayList unitList=new ArrayList();				//arraylist of all units on the battlefield, player and ai
 	public ArrayList structureList=new ArrayList();			//arraylist of all structures ai and player(trees, rocks, trenches)
 	
 	
@@ -42,7 +41,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 	public void stop(){}
 	public void paint(Graphics paint){
 		
-		}
+	}
+	public void update(){
+		//something to do with buffering
+	}
 	public void start(){
 		th.start();
 	}
@@ -53,6 +55,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 	public void instantiatePrefab(){
 		
 	}
+	public void rotatePrefab(float degrees){}
 	public void deletePrefab(){
 		
 	}
