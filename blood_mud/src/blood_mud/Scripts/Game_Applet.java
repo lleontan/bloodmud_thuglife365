@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Timer;
 public class Game_Applet extends Applet implements Runnable,KeyListener{
 	int windowsizex=1000;
 	int windowsizey=600;
@@ -22,9 +23,12 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 		
 		public void init(){
 			setSize(windowsizex, windowsizey);
-			setBackground(new Color((int) (Math.random() * 255),		
+			
+			
+			/*setBackground(new Color((int) (Math.random() * 255),		
 					(int) (Math.random() * 255),
-					(int) (Math.random() * 255)));
+					(int) (Math.random() * 255)));*/
+			setBackground(Color.GREEN);
 			addKeyListener(this);
 	}
 	public void run() {
@@ -52,11 +56,11 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 		int returnnum = (int)(Math.random()*range+min);
 		return returnnum;
 	}
-	public void instantiatePrefab(){
-		
+	public void instantiatePrefab(ArrayList List,Object obj){
+		List.add(obj);
 	}
 	public void rotatePrefab(float degrees){}
-	public void deletePrefab(){
+	public void deletePrefab(ArrayList List){
 		
 	}
 	public void keyTyped(KeyEvent arg0) {
