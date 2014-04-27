@@ -9,7 +9,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 public class Game_Applet extends Applet implements Runnable,KeyListener{
 	int windowsizex=1000;
 	int windowsizey=600;
@@ -35,13 +40,35 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 			addKeyListener(this);
 	}
 	public void run() {
+		try{
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-		Object temptree=new Tree();
+		Object temptree;
+			temptree = new Tree(20,20);
+		
+
 		Instantiate(structureList,temptree);
 		while(true){
+			
 			repaint();					//end of run method
 			Thread.yield();
 			}
+		}
+		catch (MalformedURLException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();}
+	}
+	public Image get_image(String url) throws IOException{
+		File file=new File(url);
+		
+		
+		java.net.URL f=new File(url).toURI().toURL();
+		System.out.println(f.getPath());
+		Image returnImage;
+		
+		returnImage=ImageIO.read(file);
+		//returnImage=getImage(f,name);
+		//returnImage=getImage(f);
+		
+		return returnImage;
 	}
 	public void keyPressed(KeyEvent key){}
 	public void keyReleased(KeyEvent key){
@@ -50,11 +77,12 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 	public void stop(){}
 	public void paint(Graphics paint){
 		for(int a=0;a<structureList.size();a++){
-			int x1=structureList.get(a).x;
-			int y1=structureList.get(a).y;
-			Image img=structureList.get(a).defaultImage;
-			
+			cosmeticSprite cos=(cosmeticSprite) structureList.get(a);
+			int x1=(int)cos.x;
+			int y1=(int)cos.y;
+			Image img=cos.defaultImage;
 			paint.drawImage(img,x1, y1, this);
+			
 		}
 	}
 	public void update(){
