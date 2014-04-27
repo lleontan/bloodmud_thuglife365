@@ -6,9 +6,11 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -76,6 +78,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 	}
 	public void stop(){}
 	public void paint(Graphics paint){
+		Graphics2D g=(Graphics2D)paint;
 		for(int a=0;a<structureList.size();a++){
 			cosmeticSprite cos=(cosmeticSprite) structureList.get(a);
 			int x1=(int)cos.x;
@@ -83,6 +86,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 			Image img=cos.defaultImage;
 			paint.drawImage(img,x1, y1, this);
 			
+			//we're going to use graphics 2d to do all our painting instead of just graphics
+			/*AffineTransform rotation;
+			
+			g.drawImage(img, xform, this);*/
 		}
 	}
 	public void update(){

@@ -1,4 +1,4 @@
-
+package blood_mud.Scripts.Assests.generic_soldier;
 import blood_mud.Scripts.playerSoldier;
 
 public class generic_soldier extends playerSoldier{
