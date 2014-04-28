@@ -77,9 +77,14 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 		
 	}
 	public void stop(){}
+	int testint=0;//testing int, delete later
 	public void paint(Graphics paint){
 		Graphics2D g=(Graphics2D)paint;
-		for(int a=0;a<structureList.size();a++){
+		int tempSize=structureList.size();			//temp variable for preformance reasons
+		
+		System.out.println("asdf "+testint);
+		testint++;
+		for(int a=0;a<tempSize;a++){
 			cosmeticSprite cos=(cosmeticSprite) structureList.get(a);
 			int x1=(int)cos.x;
 			int y1=(int)cos.y;
@@ -92,9 +97,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener{
 			g.drawImage(img, xform, this);*/
 		}
 	}
-	public void update(){
+	/*public void update(){
 		//something to do with buffering
-	}
+	}*/
 	public void start(){
 		th.start();
 	}
