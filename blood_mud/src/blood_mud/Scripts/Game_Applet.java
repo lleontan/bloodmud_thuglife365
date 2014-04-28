@@ -1,6 +1,7 @@
 package blood_mud.Scripts;
 
 import blood_mud.Scripts.Assests.Tree.*;
+import blood_mud.Scripts.Assests.generic_soldier.generic_soldier;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -25,7 +26,8 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	int playerlives=10;
 	public ArrayList cosmeticList=new ArrayList();			//this is our arraylist of cosmetic battlefield damage(blown up trees)
 	public ArrayList tempCosemeticList=new ArrayList();		//arraylist of temporary battle damage(bullet holes, explosions)
-	public ArrayList unitList=new ArrayList();				//arraylist of all units on the battlefield, player and ai
+	public ArrayList AIUnitlist=new ArrayList();				//arraylist of all units on the battlefield, player and ai
+	public ArrayList playerUnitlist=new ArrayList();
 	public ArrayList structureList=new ArrayList();			//arraylist of all structures ai and player(trees, rocks, trenches)
 	
 	
@@ -41,6 +43,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 					(int) (Math.random() * 255)));*/
 			setBackground(Color.GREEN);
 			addKeyListener(this);
+			addMouseListener(this);
 	}
 	public void run() {
 		try{
@@ -48,7 +51,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		Object temptree;
 			temptree = new Tree(20,20);
 		
-
+		generic_soldier soldier1=new generic_soldier(200,200);
+		Instantiate(playerUnitlist,soldier1);
+		
 		Instantiate(structureList,temptree);
 		while(true){
 			
@@ -64,7 +69,6 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		
 		java.net.URL f=new File(url).toURI().toURL();
-		System.out.println(f.getPath());
 		Image returnImage;
 		
 		returnImage=ImageIO.read(file);
@@ -91,25 +95,31 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		offscreen=createImage(windowsizex,windowsizey);
 		Graphics2D off=(Graphics2D) offscreen.getGraphics();
 		
-		System.out.println("asdf "+testint);
-		testint++;
-		for(int a=0;a<tempSize;a++){
-			cosmeticSprite cos=(cosmeticSprite) structureList.get(a);
-			int x1=(int)cos.x;
-			int y1=(int)cos.y;
-			Image img=cos.defaultImage;
-			off.drawImage(img,x1, y1, this);
+		drawList(off,cosmeticList);
+		drawList(off,structureList);
+		drawList(off,AIUnitlist);
+		drawList(off,playerUnitlist);
+		//we're going to use graphics 2d to do all our painting instead of just graphics
+		/*AffineTransform rotation;
 			
-			//we're going to use graphics 2d to do all our painting instead of just graphics
-			/*AffineTransform rotation;
-			
-			g.drawImage(img, xform, this);*/
-		}
-	paint.drawImage(offscreen, 0, 0, this);
+		g.drawImage(img, xform, this);*/
+		
+		paint.drawImage(offscreen, 0, 0, this);
 	}
 	/*public void update(){
 		//something to do with buffering
 	}*/
+	public void drawList(Graphics2D off,ArrayList list){
+		int tempSize=list.size();
+		for(int a=0;a<tempSize;a++){
+			cosmeticSprite cos=(cosmeticSprite) list.get(a);
+			if(cos.invisible_to_player==false){
+			int x1=(int)cos.x;
+			int y1=(int)cos.y;
+			Image img=cos.defaultImage;
+			off.drawImage(img,x1, y1, this);}
+		}
+	}
 	public void start(){
 
 		Thread th=new Thread(this);
@@ -138,7 +148,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		int y=mouse.getY();
 		
 		Collisions col=new Collisions();
-		col.checkPosition(x,y,unitList);
+		int index=col.checkPosition(x,y,playerUnitlist);
 	}
 	public void mouseEntered(MouseEvent mouse) {
 		
