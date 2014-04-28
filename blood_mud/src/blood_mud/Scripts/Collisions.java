@@ -1,5 +1,7 @@
 package blood_mud.Scripts;
 
+import java.util.ArrayList;
+
 public class Collisions {
 	//Collision class, put collision methods in here
 	//public static boolean canChangeDirection=true;
@@ -38,6 +40,27 @@ public class Collisions {
 		if(hascollided==true&&donotresetcollisioncounter==false){
 		}
 		return hascollided;
+	}
+	public cosmeticSprite checkPosition(int x,int y,ArrayList checkList){
+		cosmeticSprite returnSprite=new cosmeticSprite();
+		int listSize=checkList.size();
+		for(int a=0;a<listSize;a++){
+			cosmeticSprite tempcos=(cosmeticSprite) checkList.get(a);
+			if(checkCollision(x,y,tempcos)){
+				
+			}
+		}
+		
+		return returnSprite;
+	}
+	public boolean checkCollision(int x, int y,cosmeticSprite cos2){
+		boolean returnboo=false;
+		
+		float cos2x=cos2.x;
+		//finish this thing
+		if(x>cos2x&&x<(cos2.width+cos2x)){}
+		
+		return returnboo;
 	}
 }
 	/*
