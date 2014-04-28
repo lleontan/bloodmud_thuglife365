@@ -4,20 +4,23 @@ public class Soldier extends Prefab{
 	//this is a soldier class, all soldiers inherit from this class
 	
 	//almost everything a soldier does should have some degree of randomness
-	public float moveSpeed;				//movespeed
-	public float xSpeed;			//x and y movespeeds
-	public float ySpeed;
-	public int moral;
-	public int health;
-	public int rifle;
+	public float moveSpeed=5;				//movespeed
+	public float xSpeed=0;			//x and y movespeeds
+	public float ySpeed=0;
+	public int moral=15;
+	public int health=100;
+	public int rifle=15;
 	
-	public float aquireTime;
-	public float aimTime;
-	public int side;				//determines the faction, 0 for other, 1 for player, 2 for ai, 3 for possibly a 2nd ai
-	public int state;
+	public float aquireTime=(float) .2;		//default values, change later
+	public float aimTime=(float) .2;
+	public int side=(int) .2;				//determines the faction, 0 for other, 1 for player, 2 for ai, 3 for possibly a 2nd ai
+	public int state=0;
 	
 	public float aquireTimer;
 	public float aimTimer;
+	public Soldier(){
+		
+	}
 	public void moveTo(int newX,int newY){
 		//sets x and y movespeeds to get to coords, no messing with rotations
 
@@ -44,7 +47,7 @@ public class Soldier extends Prefab{
 			//excecute gib command and kill comand
 		}
 	}
-	
+	public void close_quarters_combat_instance(){}
 	public void setAquisitionTimer(){
 		aquireTimer=(long)aquireTime;
 	}
