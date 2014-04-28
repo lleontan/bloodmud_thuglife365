@@ -8,11 +8,14 @@ import javax.print.DocFlavor.URL;
 
 import blood_mud.Scripts.Prefab;
 public class Tree extends Prefab{
-	public Tree(int x,int y) throws IOException{
+	public Tree(int x,int y,int width,int height) throws IOException{
 		//constructor
 	this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
 	this.x=x;
 	this.y=y;
+
+	this.height=height;
+	this.width=width;
 	this.defaultImage=app.get_image(assetPath);
 		}
 	}

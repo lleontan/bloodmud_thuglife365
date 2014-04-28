@@ -4,11 +4,13 @@ import java.io.IOException;
 import blood_mud.Scripts.playerSoldier;
 
 public class generic_soldier extends playerSoldier{
-	public generic_soldier(int x,int y) throws IOException{
+	public generic_soldier(int x,int y,int height,int width) throws IOException{
 		//constructor
 		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
 		this.x=x;
 		this.y=y;
+		this.height=height;
+		this.width=width;
 		this.defaultImage=app.get_image(assetPath);
 	}
 	public void soldierAI(){

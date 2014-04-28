@@ -11,6 +11,7 @@ public class Collisions {
 		for(int a=0;a<listSize;a++){
 			cosmeticSprite tempcos=(cosmeticSprite) checkList.get(a);
 			if(checkCollision(x,y,tempcos)){
+				System.out.println("clicked on thing");
 				returnval=a;
 				break;//break the loop so we only select one unit
 			}
@@ -23,10 +24,10 @@ public class Collisions {
 		
 		float cosx=cos.x;
 		float cosy=cos.y;
-		float cosl=cos.length;
+		float cosh=cos.height;
 		float cosw=cos.width;
 		//finish this thing
-		if((x>cosx&&x<(cosw+cosx))&&(y>cosy&&y<(cosy+cosl))){
+		if((x>cosx&&x<(cosw+cosx))&&(y>cosy&&y<(cosy+cosh))){
 			returnboo=true;
 		}
 		

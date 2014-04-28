@@ -26,11 +26,11 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	int playerlives=10;
 	public ArrayList cosmeticList=new ArrayList();			//this is our arraylist of cosmetic battlefield damage(blown up trees)
 	public ArrayList tempCosemeticList=new ArrayList();		//arraylist of temporary battle damage(bullet holes, explosions)
-	public ArrayList AIUnitlist=new ArrayList();				//arraylist of all units on the battlefield, player and ai
+	public ArrayList AIUnitlist=new ArrayList();				//arraylists of all units on the battlefield, player and ai
 	public ArrayList playerUnitlist=new ArrayList();
-	public ArrayList structureList=new ArrayList();			//arraylist of all structures ai and player(trees, rocks, trenches)
+	public ArrayList structureList=new ArrayList();			//arraylist of all structures, ai and player(trees, rocks, trenches)
 	
-	
+	public playerSoldier selectedUnit;
 	
 	Font font1 = new Font("consolas", Font.PLAIN, 24);			//font
 		
@@ -49,9 +49,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		try{
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 		Object temptree;
-			temptree = new Tree(20,20);
+			temptree = new Tree(20,20,30,30);
 		
-		generic_soldier soldier1=new generic_soldier(200,200);
+		generic_soldier soldier1=new generic_soldier(200,200,40,40);
 		Instantiate(playerUnitlist,soldier1);
 		
 		Instantiate(structureList,temptree);
@@ -116,8 +116,24 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			if(cos.invisible_to_player==false){
 			int x1=(int)cos.x;
 			int y1=(int)cos.y;
+			int height=cos.height;
+			int width=cos.width;
+			
 			Image img=cos.defaultImage;
-			off.drawImage(img,x1, y1, this);}
+			int imgh=img.getHeight(this);
+			int imgw=img.getWidth(this);
+			
+			float scalex=(float) ((width+.0)/(imgw+.0));
+			float scaley=(float) ((height+.0)/(imgh+.0));
+			
+			AffineTransform newform=new AffineTransform();
+			
+			newform.translate(x1, y1);				//we should change this so that the affine transforms are held by the
+													//cosmetic sprite object
+			newform.scale(scalex, scaley);					//size rescaling
+			off.drawImage(img, newform, this);
+			//off.drawImage(img,x1, y1, this);
+			}
 		}
 	}
 	public void start(){
@@ -148,14 +164,22 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		int y=mouse.getY();
 		
 		Collisions col=new Collisions();
-		int index=col.checkPosition(x,y,playerUnitlist);
+		
+		if (buttonPressed==1){
+			System.out.println("asdf");
+			int index=col.checkPosition(x,y,playerUnitlist);
+			if(index==-1){
+				System.out.println("not finding anything");
+				selectedUnit=null;
+			}
+			else{
+			selectedUnit=(playerSoldier) playerUnitlist.get(index);
+			System.out.println(selectedUnit.getClass().getName());
+			}
+		}
 	}
 	public void mouseEntered(MouseEvent mouse) {
-		
-		int x=mouse.getX();
-		int y=mouse.getY();
-		
-		
+		//when the mouse enters the applet window	
 	}
 	public void mouseExited(MouseEvent arg0) {
 		
