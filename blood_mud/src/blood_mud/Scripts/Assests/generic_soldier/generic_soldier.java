@@ -8,7 +8,7 @@ public class generic_soldier extends playerSoldier{
 		if(health<=10&&health>=1){
 			state=1;
 		}
-		else if(){}
+		else{}
 		
 		//do ai stuff here
 		
@@ -36,8 +36,10 @@ public class generic_soldier extends playerSoldier{
 		case 5:
 			break;
 		case 6:
-			break;
+			//pinned, cannot fire, moves more slowly, changes sprite to pinned
+			
 		case 7:
+			//move to, at bottom because many states have movement
 			break;
 		default:
 			break;

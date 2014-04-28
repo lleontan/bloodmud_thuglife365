@@ -44,7 +44,7 @@ public class Soldier extends Prefab{
 	public void damage(int ammount){
 		health=health-ammount;
 		if(health<-30){
-			//excecute gib command and kill comand
+			//excecute gib command and kill command
 		}
 	}
 	public void close_quarters_combat_instance(){}
