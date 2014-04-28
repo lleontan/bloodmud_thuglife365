@@ -7,7 +7,7 @@ public class Soldier extends Prefab{
 	public float moveSpeed=5;				//movespeed
 	public float xSpeed=0;			//x and y movespeeds
 	public float ySpeed=0;
-	public int moral=15;
+	public int morale=15;
 	public int health=100;
 	public int rifle=15;
 	
