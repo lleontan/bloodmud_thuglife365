@@ -56,13 +56,27 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		Instantiate(structureList,temptree);
 		while(true){
+			excecuteListAI(playerUnitlist);
+			excecuteListAI(AIUnitlist);
+			
+			
 			
 			repaint();					//end of run method
+			Thread.sleep(5);
 			Thread.yield();
 			}
 		}
 		catch (MalformedURLException e) {e.printStackTrace();}
 		catch (IOException e) {e.printStackTrace();}
+		catch (InterruptedException e) {e.printStackTrace();}
+	}
+	public void excecuteListAI(ArrayList list){
+		int size=list.size();
+		for(int a=0;a<size;a++){
+			Soldier sol=(Soldier)list.get(a);
+			sol.soldierState();
+			sol.doMove();
+		}
 	}
 	public Image get_image(String url) throws IOException{
 		File file=new File(url);
@@ -149,14 +163,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		List.add(obj);
 	}
 	public void rotatePrefab(float degrees){
-		
 	}
 	public void deletePrefab(ArrayList List){
-		
 	}
-	public void keyTyped(KeyEvent arg0) {
-		
-	}
+	public void keyTyped(KeyEvent arg0) {}
 	public void mouseClicked(MouseEvent mouse) {
 		//clicked and released
 		int buttonPressed=mouse.getButton();
@@ -174,7 +184,14 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			}
 			else{
 			selectedUnit=(playerSoldier) playerUnitlist.get(index);
+			selectedUnit.setMoveOrders(x, y);
 			System.out.println(selectedUnit.getClass().getName());
+			}
+		}
+		if(buttonPressed==3){
+			if(selectedUnit!=null){
+				//fix selected
+				selectedUnit.setMoveOrders(x, y);
 			}
 		}
 	}

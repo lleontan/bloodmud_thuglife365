@@ -1,15 +1,18 @@
 package blood_mud.Scripts;
 
-public class Soldier extends Prefab{
+public abstract class Soldier extends SoldierAI{
 	//this is a soldier class, all soldiers inherit from this class
 	
 	//almost everything a soldier does should have some degree of randomness
-	public float moveSpeed=5;				//movespeed
+	public float moveSpeed=2;				//movespeed
 	public float xSpeed=0;			//x and y movespeeds
 	public float ySpeed=0;
 	public int morale=15;
 	public int health=100;
 	public int rifle=15;
+	
+	public int movex=60;					//call moveTo with these variables
+	public int movey=60;
 	
 	public float aquireTime=(float) .2;		//default values, change later
 	public float aimTime=(float) .2;
@@ -23,7 +26,8 @@ public class Soldier extends Prefab{
 	}
 	public void moveTo(int newX,int newY){
 		//sets x and y movespeeds to get to coords, no messing with rotations
-
+		
+		//serious issue with my math, gabe you fix
 		float distance=(float) (Math.sqrt(Math.pow(newX-x,2)+Math.pow(y-newY,2)));
 		if(distance>.1){
 		float xDistance=newX-x;
@@ -53,5 +57,13 @@ public class Soldier extends Prefab{
 	}
 	public void setAimTimer(){
 		aimTimer=(long)aimTime;
+	}
+	public void setMoveOrders(int x,int y){
+		movex=x;
+		movey=y;
+	}
+	public void doMove(){
+		x=(int) (x+xSpeed);
+		y=(int) (y+ySpeed);
 	}
 }
