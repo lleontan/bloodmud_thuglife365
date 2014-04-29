@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
-	int windowsizex=1000;
+	int windowsizex=1000;					//window sizes
 	int windowsizey=600;
-	int playerlives=10;
+	int playerlives=10;							//player lives
 	public ArrayList cosmeticList=new ArrayList();			//this is our arraylist of cosmetic battlefield damage(blown up trees)
 	public ArrayList tempCosemeticList=new ArrayList();		//arraylist of temporary battle damage(bullet holes, explosions)
 	public ArrayList AIUnitlist=new ArrayList();				//arraylists of all units on the battlefield, player and ai
@@ -36,33 +36,29 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		public void init(){
 			setSize(windowsizex, windowsizey);
-			
-			
-			/*setBackground(new Color((int) (Math.random() * 255),		
-					(int) (Math.random() * 255),
-					(int) (Math.random() * 255)));*/
 			setBackground(Color.GREEN);
-			addKeyListener(this);
+			addKeyListener(this);					//add listeners here
 			addMouseListener(this);
 	}
 	public void run() {
 		try{
-		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-		Object temptree;
+		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);	//threading stuff
+		Object temptree;							//tree and soldier are for testing purposes
 			temptree = new Tree(20,20,30,30);
 		
 		generic_soldier soldier1=new generic_soldier(200,200,40,40);
-		Instantiate(playerUnitlist,soldier1);
 		
-		Instantiate(structureList,temptree);
+		Instantiate(playerUnitlist,soldier1);		//to create a unit call instantiate with
+		Instantiate(structureList,temptree);		//the list and the object you want to create
 		while(true){
-			excecuteListAI(playerUnitlist);
+			//update loop
+			excecuteListAI(playerUnitlist);		//excecute actions for unit AIs, make another one for structure effects
 			excecuteListAI(AIUnitlist);
 			
 			
 			
 			repaint();					//end of run method
-			Thread.sleep(5);
+			Thread.sleep(5);			
 			Thread.yield();
 			}
 		}
@@ -71,24 +67,19 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		catch (InterruptedException e) {e.printStackTrace();}
 	}
 	public void excecuteListAI(ArrayList list){
+		//excecutes the AI state machines of all units in the given arraylist
 		int size=list.size();
 		for(int a=0;a<size;a++){
 			Soldier sol=(Soldier)list.get(a);
-			sol.soldierState();
-			sol.doMove();
+			sol.soldierState();			//calling the soldier decision making
+			sol.doMove();				//telling the soldier to move
 		}
 	}
 	public Image get_image(String url) throws IOException{
+		//gets an image using a given url, can take from internet or file directory
 		File file=new File(url);
-		
-		
 		java.net.URL f=new File(url).toURI().toURL();
-		Image returnImage;
-		
-		returnImage=ImageIO.read(file);
-		//returnImage=getImage(f,name);
-		//returnImage=getImage(f);
-		
+		Image returnImage=ImageIO.read(file);
 		return returnImage;
 	}
 	public void keyPressed(KeyEvent key){}
@@ -96,13 +87,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 	}
 	public void stop(){}
-	int testint=0;//te(sting int, delete later
-	
-	/*public void update(Graphics paint){
-		paint(paint);
-	}*/
-	Image offscreen;
-	public void paint(Graphics paint){	
+	Image offscreen;		//offscreen is for buffering stuff
+	public void paint(Graphics paint){
+		//when painting paint background objects first
 		Graphics2D g=(Graphics2D)paint;
 		int tempSize=structureList.size();			//temp variable for preformance reasons
 		
@@ -114,7 +101,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		drawList(off,AIUnitlist);
 		drawList(off,playerUnitlist);
 		//we're going to use graphics 2d to do all our painting instead of just graphics
-		/*AffineTransform rotation;
+		/*AffineTransform for rotation;
 			
 		g.drawImage(img, xform, this);*/
 		
@@ -124,27 +111,28 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		//something to do with buffering
 	}*/
 	public void drawList(Graphics2D off,ArrayList list){
-		int tempSize=list.size();
+		int tempSize=list.size();		//we're doing forloops with temp variables for preformance
 		for(int a=0;a<tempSize;a++){
-			cosmeticSprite cos=(cosmeticSprite) list.get(a);
-			if(cos.invisible_to_player==false){
-			int x1=(int)cos.x;
+			cosmeticSprite cos=(cosmeticSprite) list.get(a);//getting the transform and sprite
+			if(cos.invisible_to_player==false){//some enemies may be invis to player
+			int x1=(int)cos.x;		//temp variables
 			int y1=(int)cos.y;
 			int height=cos.height;
 			int width=cos.width;
 			
-			Image img=cos.defaultImage;
+			Image img=cos.defaultImage;	//getting image
 			int imgh=img.getHeight(this);
-			int imgw=img.getWidth(this);
+			int imgw=img.getWidth(this);	//getting the size of image itself to be able to resize
 			
-			float scalex=(float) ((width+.0)/(imgw+.0));
+			float scalex=(float) ((width+.0)/(imgw+.0));	//scaling stuff
 			float scaley=(float) ((height+.0)/(imgh+.0));
 			
 			AffineTransform newform=new AffineTransform();
+			//use this for rotating, scaling, transforming ect
 			
-			newform.translate(x1, y1);				//we should change this so that the affine transforms are held by the
-													//cosmetic sprite object
-			newform.scale(scalex, scaley);					//size rescaling
+			newform.translate(x1, y1);	//we should change this so that the affine transforms are held by the
+										//cosmetic sprite object, do it later when we finish everything else
+			newform.scale(scalex, scaley);				//size rescaling
 			off.drawImage(img, newform, this);
 			//off.drawImage(img,x1, y1, this);
 			}
@@ -155,16 +143,19 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		Thread th=new Thread(this);
 		th.start();
 	}
-	public int RandomNumber(int range,int min){						//returns a random integer
+	public int RandomNumber(int range,int min){			//returns a random integer
 		int returnnum = (int)(Math.random()*range+min);
 		return returnnum;
 	}
 	public void Instantiate(ArrayList List,Object obj){
+		//USE THIS TO CREATE OBJECTS
 		List.add(obj);
 	}
 	public void rotatePrefab(float degrees){
+		//
 	}
 	public void deletePrefab(ArrayList List){
+		
 	}
 	public void keyTyped(KeyEvent arg0) {}
 	public void mouseClicked(MouseEvent mouse) {
@@ -174,21 +165,29 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		int y=mouse.getY();
 		
 		Collisions col=new Collisions();
+		//collisions object, checks positions
+		
+		//in collisions create another method that returns all
+		//things at the position instead of just the first one
 		
 		if (buttonPressed==1){
-			System.out.println("asdf");
+			//left mouse button
 			int index=col.checkPosition(x,y,playerUnitlist);
 			if(index==-1){
 				System.out.println("not finding anything");
 				selectedUnit=null;
 			}
 			else{
+				//there may be a possible issue with our selected unit.
+				//we kinda have to use the selected unit instead of an index
+				//we may need to have a reserved spot in the arraylist for the selected unit
 			selectedUnit=(playerSoldier) playerUnitlist.get(index);
 			selectedUnit.setMoveOrders(x, y);
 			System.out.println(selectedUnit.getClass().getName());
 			}
 		}
 		if(buttonPressed==3){
+			//right mouse button
 			if(selectedUnit!=null){
 				//fix selected
 				selectedUnit.setMoveOrders(x, y);
@@ -203,9 +202,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	}
 	public void mousePressed(MouseEvent arg0) {
 		//mouse held
+		//implement click and drag selection
 	}
 	public void mouseReleased(MouseEvent arg0) {
 		//mouse released
-		
 	}
 }

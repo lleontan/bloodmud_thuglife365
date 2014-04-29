@@ -60,7 +60,7 @@ public class generic_soldier extends playerSoldier{
 			//move to, at bottom because many states have movement
 			
 			//moveTo does seem to change the movespeeds but it isn't 
-			System.out.println(xSpeed+" "+ySpeed);
+			System.out.println("speeds   "+xSpeed+" "+ySpeed+"\nPosition is  "+x+" "+y);
 			moveTo(movex,movey);
 			break;
 		default:
