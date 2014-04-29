@@ -5,8 +5,11 @@ import blood_mud.Scripts.playerSoldier;
 
 public class generic_soldier extends playerSoldier{
 	public generic_soldier(int x,int y,int height,int width) throws IOException{
+		
 		//constructor
-		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
+		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
+		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Spec.jpg";
+		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
 		this.height=height;
