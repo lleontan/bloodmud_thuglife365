@@ -1,6 +1,6 @@
 package blood_mud.Scripts;
 
-public class gameController extends Game_Applet{
+public class gameController{
 	public gameController(){
 		namecount=0;
 	}
