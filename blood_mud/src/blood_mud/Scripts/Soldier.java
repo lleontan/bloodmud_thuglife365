@@ -12,7 +12,8 @@ public abstract class Soldier extends SoldierAI{
 	public float actualMovespeed=maxMovespeed;
 	public float xSpeed=0;			//x and y movespeeds
 	public float ySpeed=0;
-	public int morale=15;
+	
+	public int morale=15;		//moral affects a bunch of stuff
 	public int health=100;
 	public int rifle=15;
 	
@@ -29,7 +30,6 @@ public abstract class Soldier extends SoldierAI{
 	String displayName="asdf";//name displayed
 	
 	int arrayIndex;	//used for finding in an arrayList
-	int targetname;
 	/*
 	public long aquireTimer[]=new long[4];//0 is timer, 1 is timer end, 2 is current duration, 3 is base duration
 	public long baseFireTimer[]=new long[4];//in between shoots delay
@@ -74,7 +74,7 @@ public abstract class Soldier extends SoldierAI{
 	public class shootAt{
 		//aquires and rotates to target, checks fire type of current weapon, executes weapon fire algorithem. instantiates shell on ground
 		//soldier.shootat.method/variable to use
-		public void tryfireAt(Soldier target){
+		public void tryfireAt(ArrayList list,int targetname){
 			//fix
 			 baseFireTimer[0]-=System.currentTimeMillis();
 			 if(baseFireTimer[0]<0){
@@ -93,15 +93,13 @@ public abstract class Soldier extends SoldierAI{
 			//make target timer=timer
 			return timer;
 		}
-		public void hitAlgorythem(Soldier target){
-			//checks to see whether or not a shot hit
-			//use target object to get values of target
-		}
 		public void damageAlgorythem(){
 			//calculates the amount of damage the shot will do
 		}
 		public void executeShoot(){
 			//soldier shooting state machine, call this
+			ArrayList currentUnitList=app.AIUnitlist;
+			ArrayList targetUnitList=app.playerUnitlist;
 			switch(shootingState){
 			case 1:
 				//aim state, rotates, waits for aimtimer
@@ -116,7 +114,14 @@ public abstract class Soldier extends SoldierAI{
 			case 2:
 				//excecute shoot, calls the child classes shooting method inherited from weapon shooting class
 				//excecutes until either a state change or clip runs out
-				tryfireAt(targetnum);
+				
+				if(side==1){
+					targetUnitList=app.AIUnitlist;
+				}
+				else if(side==2){
+					targetUnitList=app.playerUnitlist;
+				}
+				tryfireAt(targetUnitList,targetname);
 				break;
 			case 3://reloading timer, goes to idle when done
 					//if inturupted then just assume reloading is done
@@ -128,8 +133,6 @@ public abstract class Soldier extends SoldierAI{
 			default:
 				//idle state, checks for targets,goes into aim state from here
 
-				ArrayList currentUnitList=app.AIUnitlist;	//defaults to enemy
-				ArrayList targetUnitList=app.playerUnitlist;
 				
 				if(side==1){
 					currentUnitList= app.playerUnitlist;
@@ -139,7 +142,7 @@ public abstract class Soldier extends SoldierAI{
 					currentUnitList=app.AIUnitlist;
 					targetUnitList=app.playerUnitlist;
 				}
-				targetname=app.findListDistance(currentUnitList, targetUnitList, name);
+				targetname=app.findListDistance(currentUnitList, targetUnitList, targetname);
 				if(targetname==-1){
 					
 				}

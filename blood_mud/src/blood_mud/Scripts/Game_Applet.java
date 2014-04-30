@@ -32,7 +32,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	public ArrayList structureList=new ArrayList();			//arraylist of all structures, ai and player(trees, rocks, trenches)
 	
 	public playerSoldier selectedUnit;
-	gameController controller;
+	gameController controller=new gameController();
 	
 	Font font1 = new Font("consolas", Font.PLAIN, 24);			//font
 		
@@ -79,17 +79,16 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			sol.doMove();				//telling the soldier to move
 		}
 	}
-	public int findListDistance(ArrayList list,ArrayList targetList,String unitName){
+	public int findListDistance(ArrayList list,ArrayList targetList,int unitIndex){
 		//finds the closest thing in the arraylist
 		//returns the arrayList index
 		
 		//-1 for nothing
-		int unitIndex=findname(list,unitName);
 		int size=targetList.size();
 		Soldier sol=(Soldier)list.get(unitIndex);
 		
 		float lowestDistance=-1;
-		String lowestDistanceReference="nothing found";
+		int lowestDistanceReference=-1;
 		
 		for(int a=0;a<size;a++){
 			Soldier targetSol=(Soldier)targetList.get(a);
@@ -98,14 +97,27 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
 			if(a==0){
 				lowestDistance=distance;
-				lowestDistanceReference=targetSol.name;
+				lowestDistanceReference=targetSol.targetname;
 			}
 			else if(distance<lowestDistance){
 				lowestDistance=distance;
-				lowestDistanceReference=targetSol.name;
+				lowestDistanceReference=targetSol.targetname;
 			}
 		}
 		return lowestDistanceReference;
+	}
+	public float findDistance(ArrayList list,ArrayList targetList,int shooterName,int targetName){
+		//finds the distance between 2 objects
+		
+		Soldier shooter=(Soldier)list.get(shooterName);
+		Soldier targetSol=(Soldier)list.get(targetName);
+		
+			
+			//gabe check my distance code
+			float distance=(float) (Math.sqrt(Math.pow(shooter.x-targetSol.x,2)+Math.pow(shooter.y-targetSol.y,2)));
+			
+		
+		return distance;
 	}
 	public Image get_image(String url) throws IOException{
 		//gets an image using a given url, can take from internet or file directory
@@ -196,7 +208,11 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	}
 	public void Instantiate(ArrayList List,Object obj){
 		//USE THIS TO CREATE OBJECTS
-		List.add(obj);
+		cosmeticSprite spri=(cosmeticSprite)obj;
+
+		System.out.println("controller"+controller.getNewName());
+		spri.targetname=controller.getNewName();
+		List.add(spri);
 	}
 	public void rotatePrefab(float degrees){
 		//

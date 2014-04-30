@@ -1,9 +1,14 @@
 package blood_mud.Scripts;
 
 public class gameController {
-	public int namecount;//current name index,
-	public void getName(String string){
+	public gameController(){
+		namecount=0;
+	}
+	public int namecount=0;//current name index,
+	public int getNewName(){
 		//uses the class to find a name
+		namecount++;
+		return namecount;
 	}
 	public void excecuteController(){
 		//call this from run

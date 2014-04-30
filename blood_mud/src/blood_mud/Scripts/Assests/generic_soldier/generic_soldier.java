@@ -18,7 +18,7 @@ public class generic_soldier extends playerSoldier{
 		this.width=width;
 		this.defaultImage=app.get_image(assetPath);
 		this.side=1;		//set side for fucking everything
-		this.name=gameController.getName(this.getClass().getName());
+
 
 		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
 		aquireTimer[1]=(long) .5;
