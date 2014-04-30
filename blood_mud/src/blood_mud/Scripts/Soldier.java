@@ -19,20 +19,27 @@ public abstract class Soldier extends SoldierAI{
 	public int movex=60;					//call moveTo with these variables
 	public int movey=60;
 	
-	public float aquireTime=(float) .4;		//default values, change later
-	public float aimTime=(float) .2;
 	public int side=(int) 2;				//determines the faction, 0 for other, 1 for player, 2 for ai, 3 for possibly a 2nd ai
 	
-	public int state=0;			//soldier state
-	public int shootingState=0;	//soldier shooting statemachine
-	public Weapon soldierWeapon;
+	public int state=-1;			//soldier state
+	public int shootingState=-1;	//soldier shooting statemachine
+	public Weapon soldierWeapon;//Soldiers Weapon
 	
-	String name="asdf";
+	String name="Soldier1";	//we need name generating code
+	String displayName="asdf";//name displayed
 	
 	int arrayIndex;	//used for finding in an arrayList
+	int targetname;
+	/*
+	public long aquireTimer[]=new long[4];//0 is timer, 1 is timer end, 2 is current duration, 3 is base duration
+	public long baseFireTimer[]=new long[4];//in between shoots delay
+	public long reloadTimer[]=new long[4];//reloading timer
+	*/
+
+	public long aquireTimer[]={(long) .1,(long) .2,(long) .3};//0 is timer,1 is current duration, 2 is base duration
+	public long baseFireTimer[]=new long[4];//in between shoots delay
+	public long reloadTimer[]=new long[4];//reloading timer
 	
-	public long aquireTimer,aquireTimerReset;
-	public float aimTimer;
 	public Soldier(){
 		//constructor, you can make another one with more arguments if needed
 		
@@ -65,22 +72,26 @@ public abstract class Soldier extends SoldierAI{
 		}
 	}
 	public class shootAt{
-		//aquires and rotates to target, checks fire type of current weapon, excecutes weapon fire algorithem. instantiates shell on ground
+		//aquires and rotates to target, checks fire type of current weapon, executes weapon fire algorithem. instantiates shell on ground
 		//soldier.shootat.method/variable to use
-		long fireTimerReset,fireTimer;			//timer is the timer, timer reset is used to reset the timer
-		long reloadTimerReset,reloadTimer;
 		public void tryfireAt(Soldier target){
 			//fix
-			 fireTimer-=System.currentTimeMillis();
-			 if(fireTimer<0){
-				 setReloadTimer();
+			 baseFireTimer[0]-=System.currentTimeMillis();
+			 if(baseFireTimer[0]<0){
+				 baseFireTimer=resetTimer(baseFireTimer,(float) .2);
+				 soldierWeapon.shoot();//Executes shoot method
 			 }
 		}
-		public void setReloadTimer(){
-			reloadTimer=(long) soldierWeapon.reloadTime;
-		}
-		public void setFireTimer(){
-			fireTimer=(long) soldierWeapon.firerate;
+		public long[] resetTimer(long[]timer,float percentError){
+			//note, use percent error as a decimal
+			timer[0]=System.currentTimeMillis();
+			long difference=(long) (percentError*timer[3]);		//uses base duration to set actual duration
+			
+			long timerRandomness=(long) (Math.random()*(difference*2)+(timer[3]-difference));//gabe check math
+			timer[1]=System.currentTimeMillis()+timerRandomness;
+			timer[0]=timer[1];
+			//make target timer=timer
+			return timer;
 		}
 		public void hitAlgorythem(Soldier target){
 			//checks to see whether or not a shot hit
@@ -95,18 +106,23 @@ public abstract class Soldier extends SoldierAI{
 			case 1:
 				//aim state, rotates, waits for aimtimer
 				//goes to back to idle or goes to excecute shoot
-				aquireTimer=aquireTimer-System.currentTimeMillis();
-				if(aquireTimer<0){
+				aquireTimer[0]-=System.currentTimeMillis();
+				if(aquireTimer[0]<0){
+					//end of aiming
+					resetTimer(aquireTimer,0);
 					shootingState=2;
 				}
 				break;
 			case 2:
 				//excecute shoot, calls the child classes shooting method inherited from weapon shooting class
-				soldierWeapon.shoot();
+				//excecutes until either a state change or clip runs out
+				tryfireAt(targetnum);
 				break;
 			case 3://reloading timer, goes to idle when done
+					//if inturupted then just assume reloading is done
 				break;
 			case 4:
+				System.out.println("no shoot");
 				//indefinte no shoot, stays in this until told it can shoot again
 				break;
 			default:
@@ -123,8 +139,11 @@ public abstract class Soldier extends SoldierAI{
 					currentUnitList=app.AIUnitlist;
 					targetUnitList=app.playerUnitlist;
 				}
-				int target=app.findListDistance(currentUnitList, targetUnitList, name);
-				if(target!=-1){
+				targetname=app.findListDistance(currentUnitList, targetUnitList, name);
+				if(targetname==-1){
+					
+				}
+				else{
 					state=1;
 				}
 				break;
@@ -144,12 +163,6 @@ public abstract class Soldier extends SoldierAI{
 	public void close_quarters_combat_instance(){
 		//if a unit comes into contact with an enemy that is not a
 		//vehicle the two should fight hand to hand
-	}
-	public void setAquisitionTimer(){
-		aquireTimer=(long)aquireTime;
-	}
-	public void setAimTimer(){
-		aimTimer=(long)aimTime;
 	}
 	public void setMoveOrders(int x,int y){
 		//sets where the unit is going to move to next

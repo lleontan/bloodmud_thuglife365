@@ -2,6 +2,7 @@ package blood_mud.Scripts.Assests.generic_soldier;
 import java.io.IOException;
 
 import blood_mud.Scripts.Soldier;
+import blood_mud.Scripts.gameController;
 import blood_mud.Scripts.playerSoldier;
 
 public class generic_soldier extends playerSoldier{
@@ -17,6 +18,19 @@ public class generic_soldier extends playerSoldier{
 		this.width=width;
 		this.defaultImage=app.get_image(assetPath);
 		this.side=1;		//set side for fucking everything
+		this.name=gameController.getName(this.getClass().getName());
+
+		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
+		aquireTimer[1]=(long) .5;
+		aquireTimer[2]=(long) .5;
+		
+		baseFireTimer[0]=(long) .5;	//this is a pain in the ass, make timers thier own class instead of an array
+		baseFireTimer[1]=(long) .5;
+		baseFireTimer[2]=(long) .5;
+		
+		reloadTimer[0]=(long) .5;
+		reloadTimer[1]=(long) .5;
+		reloadTimer[2]=(long) .5;
 	}
 	public void soldierDecision(){
 		//this method sets the state machine

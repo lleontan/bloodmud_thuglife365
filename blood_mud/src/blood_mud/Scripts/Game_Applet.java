@@ -32,6 +32,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	public ArrayList structureList=new ArrayList();			//arraylist of all structures, ai and player(trees, rocks, trenches)
 	
 	public playerSoldier selectedUnit;
+	gameController controller;
 	
 	Font font1 = new Font("consolas", Font.PLAIN, 24);			//font
 		
@@ -56,6 +57,8 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			excecuteListAI(playerUnitlist);		//excecute actions for unit AIs, make another one for structure effects
 			excecuteListAI(AIUnitlist);
 			
+			//run gameController here
+			controller.excecuteController();
 			
 			
 			repaint();					//end of run method
@@ -86,7 +89,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		Soldier sol=(Soldier)list.get(unitIndex);
 		
 		float lowestDistance=-1;
-		int lowestDistanceReference=-1;
+		String lowestDistanceReference="nothing found";
 		
 		for(int a=0;a<size;a++){
 			Soldier targetSol=(Soldier)targetList.get(a);
@@ -95,11 +98,11 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
 			if(a==0){
 				lowestDistance=distance;
-				lowestDistanceReference=a;
+				lowestDistanceReference=targetSol.name;
 			}
 			else if(distance<lowestDistance){
 				lowestDistance=distance;
-				lowestDistanceReference=a;
+				lowestDistanceReference=targetSol.name;
 			}
 		}
 		return lowestDistanceReference;
