@@ -25,6 +25,10 @@ public class Gun extends Weapon{
 		//checks to see whether or not a shot hit
 		//use target object to get values of target
 		float distance=findDistance(shooter, target);	//gabe check my distance
+		float distanceMultiplier;
+		if(distance<effectiveRange){
+			distanc
+		}
 		shooter.rifle;
 	}
 
