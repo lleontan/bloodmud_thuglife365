@@ -1,6 +1,7 @@
 package blood_mud.Scripts.Assests.generic_soldier;
 import java.io.IOException;
 
+import blood_mud.Scripts.Soldier;
 import blood_mud.Scripts.playerSoldier;
 
 public class generic_soldier extends playerSoldier{
@@ -15,6 +16,7 @@ public class generic_soldier extends playerSoldier{
 		this.height=height;
 		this.width=width;
 		this.defaultImage=app.get_image(assetPath);
+		this.side=1;		//set side for fucking everything
 	}
 	public void soldierDecision(){
 		//this method sets the state machine

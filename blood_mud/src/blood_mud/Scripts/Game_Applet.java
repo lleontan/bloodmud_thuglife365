@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
@@ -46,7 +47,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		Object temptree;							//tree and soldier are for testing purposes
 			temptree = new Tree(20,20,30,30);
 		
-		generic_soldier soldier1=new generic_soldier(200,200,40,40);
+		generic_soldier soldier1=new generic_soldier(200,200,70,70);
 		
 		Instantiate(playerUnitlist,soldier1);		//to create a unit call instantiate with
 		Instantiate(structureList,temptree);		//the list and the object you want to create
@@ -58,7 +59,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			
 			
 			repaint();					//end of run method
-			Thread.sleep(5);			
+			Thread.sleep(30);			
 			Thread.yield();
 			}
 		}
@@ -74,6 +75,34 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			sol.soldierState();			//calling the soldier decision making
 			sol.doMove();				//telling the soldier to move
 		}
+	}
+	public int findListDistance(ArrayList list,ArrayList targetList,String unitName){
+		//finds the closest thing in the arraylist
+		//returns the arrayList index
+		
+		//-1 for nothing
+		int unitIndex=findname(list,unitName);
+		int size=targetList.size();
+		Soldier sol=(Soldier)list.get(unitIndex);
+		
+		float lowestDistance=-1;
+		int lowestDistanceReference=-1;
+		
+		for(int a=0;a<size;a++){
+			Soldier targetSol=(Soldier)targetList.get(a);
+			
+			//gabe check my distance code
+			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
+			if(a==0){
+				lowestDistance=distance;
+				lowestDistanceReference=a;
+			}
+			else if(distance<lowestDistance){
+				lowestDistance=distance;
+				lowestDistanceReference=a;
+			}
+		}
+		return lowestDistanceReference;
 	}
 	public Image get_image(String url) throws IOException{
 		//gets an image using a given url, can take from internet or file directory
@@ -137,6 +166,21 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			//off.drawImage(img,x1, y1, this);
 			}
 		}
+	}
+	public int findname(ArrayList list,String findString){
+		//scans through the list for something named the string and returns the address
+		//-1 for nothing
+		int returnAddress = -1;
+		
+		int tempSize=list.size();
+		for(int a=0;a<tempSize;a++){
+			Soldier tempSol=(Soldier)list.get(a);
+			String tempname=tempSol.name;
+			if(tempname.equals(findString)){
+				returnAddress=a;
+			}
+		}
+		return returnAddress;
 	}
 	public void start(){
 

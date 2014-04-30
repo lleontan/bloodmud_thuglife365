@@ -1,5 +1,7 @@
 package blood_mud.Scripts;
 
+import java.util.ArrayList;
+
 public abstract class Soldier extends SoldierAI{
 	//this is a soldier class, all soldiers inherit from this class
 	
@@ -17,16 +19,31 @@ public abstract class Soldier extends SoldierAI{
 	public int movex=60;					//call moveTo with these variables
 	public int movey=60;
 	
-	public float aquireTime=(float) .2;		//default values, change later
+	public float aquireTime=(float) .4;		//default values, change later
 	public float aimTime=(float) .2;
-	public int side=(int) .2;				//determines the faction, 0 for other, 1 for player, 2 for ai, 3 for possibly a 2nd ai
-	public int state=0;
+	public int side=(int) 2;				//determines the faction, 0 for other, 1 for player, 2 for ai, 3 for possibly a 2nd ai
 	
-	public float aquireTimer;
+	public int state=0;			//soldier state
+	public int shootingState=0;	//soldier shooting statemachine
+	public Weapon soldierWeapon;
+	
+	String name="asdf";
+	
+	int arrayIndex;	//used for finding in an arrayList
+	
+	public long aquireTimer,aquireTimerReset;
 	public float aimTimer;
 	public Soldier(){
 		//constructor, you can make another one with more arguments if needed
 		
+	}
+	public void generateName(){
+		//seth populate this array
+		String nameArray[]={"s","d"};
+		//int usedNameReference[]=new int[nameArray.length];
+		
+		
+		name=nameArray[(int)(Math.random()*nameArray.length)];
 	}
 	public void moveTo(int newX,int newY){
 		//sets x and y movespeeds to get to coords, no messing with rotations
@@ -47,9 +64,77 @@ public abstract class Soldier extends SoldierAI{
 			ySpeed=0;
 		}
 	}
-	public void shootAt(Soldier target){
+	public class shootAt{
 		//aquires and rotates to target, checks fire type of current weapon, excecutes weapon fire algorithem. instantiates shell on ground
+		//soldier.shootat.method/variable to use
+		long fireTimerReset,fireTimer;			//timer is the timer, timer reset is used to reset the timer
+		long reloadTimerReset,reloadTimer;
+		public void tryfireAt(Soldier target){
+			//fix
+			 fireTimer-=System.currentTimeMillis();
+			 if(fireTimer<0){
+				 setReloadTimer();
+			 }
+		}
+		public void setReloadTimer(){
+			reloadTimer=(long) soldierWeapon.reloadTime;
+		}
+		public void setFireTimer(){
+			fireTimer=(long) soldierWeapon.firerate;
+		}
+		public void hitAlgorythem(Soldier target){
+			//checks to see whether or not a shot hit
+			//use target object to get values of target
+		}
+		public void damageAlgorythem(){
+			//calculates the amount of damage the shot will do
+		}
+		public void executeShoot(){
+			//soldier shooting state machine, call this
+			switch(shootingState){
+			case 1:
+				//aim state, rotates, waits for aimtimer
+				//goes to back to idle or goes to excecute shoot
+				aquireTimer=aquireTimer-System.currentTimeMillis();
+				if(aquireTimer<0){
+					shootingState=2;
+				}
+				break;
+			case 2:
+				//excecute shoot, calls the child classes shooting method inherited from weapon shooting class
+				soldierWeapon.shoot();
+				break;
+			case 3://reloading timer, goes to idle when done
+				break;
+			case 4:
+				//indefinte no shoot, stays in this until told it can shoot again
+				break;
+			default:
+				//idle state, checks for targets,goes into aim state from here
+
+				ArrayList currentUnitList=app.AIUnitlist;	//defaults to enemy
+				ArrayList targetUnitList=app.playerUnitlist;
+				
+				if(side==1){
+					currentUnitList= app.playerUnitlist;
+					targetUnitList=app.AIUnitlist;
+				}
+				else if(side==2){
+					currentUnitList=app.AIUnitlist;
+					targetUnitList=app.playerUnitlist;
+				}
+				int target=app.findListDistance(currentUnitList, targetUnitList, name);
+				if(target!=-1){
+					state=1;
+				}
+				break;
+			}
+		}
 	}
+	
+	
+	
+	
 	public void damage(int ammount){
 		health=health-ammount;
 		if(health<-30){
@@ -76,4 +161,5 @@ public abstract class Soldier extends SoldierAI{
 		x=(int) (x+xSpeed);
 		y=(int) (y+ySpeed);
 	}
-}
+	}
+
