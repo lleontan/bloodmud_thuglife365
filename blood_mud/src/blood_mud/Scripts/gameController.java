@@ -1,6 +1,6 @@
 package blood_mud.Scripts;
 
-public class gameController {
+public class gameController extends Game_Applet{
 	public gameController(){
 		namecount=0;
 	}
@@ -13,5 +13,6 @@ public class gameController {
 	public void excecuteController(){
 		//call this from run
 		//call all other methods from this
+		
 	}
 }

@@ -21,15 +21,18 @@ public class Gun extends Weapon{
 		
 	}
 
-	public void hitAlgorithm(Soldier shooter,Soldier target,int shooterName,int targetName){
+	public boolean hitAlgorithm(Soldier shooter,Soldier target,int shooterName,int targetName){
 		//checks to see whether or not a shot hit
 		//use target object to get values of target
+		System.out.println("Hit Algorithm");
 		float distance=findDistance(shooter, target);	//gabe check my distance
 		float distanceMultiplier;
+		boolean didHit=false;
 		if(distance<effectiveRange){
-			distanc
+			distanceMultiplier=1;
 		}
-		shooter.rifle;
+		//shooter.rifle;
+		return didHit;
 	}
 
 	public float findDistance(Soldier shooter,Soldier target){
