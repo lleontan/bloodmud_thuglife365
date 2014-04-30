@@ -214,6 +214,15 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		spri.targetname=controller.getNewName();
 		List.add(spri);
 	}
+	public void InstantiateEnemy(Object obj){
+		//USE THIS TO CREATE OBJECTS
+		ArrayList List=AIUnitlist;
+		cosmeticSprite spri=(cosmeticSprite)obj;
+
+		System.out.println("controller"+controller.getNewName());
+		spri.targetname=controller.getNewName();
+		List.add(spri);
+	}
 	public void rotatePrefab(float degrees){
 		//
 	}
@@ -245,7 +254,6 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 				//we kinda have to use the selected unit instead of an index
 				//we may need to have a reserved spot in the arraylist for the selected unit
 			selectedUnit=(playerSoldier) playerUnitlist.get(index);
-			selectedUnit.setMoveOrders(x, y);
 			System.out.println(selectedUnit.getClass().getName());
 			}
 		}
