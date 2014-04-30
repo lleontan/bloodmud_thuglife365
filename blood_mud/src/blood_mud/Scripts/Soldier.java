@@ -59,12 +59,15 @@ public abstract class Soldier extends SoldierAI{
 		//serious issue with my math, gabe you fix
 		float distance=(float) (Math.sqrt(Math.pow(newX-x,2)+Math.pow(newY-y,2)));
 		if(distance>.1){
-		float xDistance=newX-x;
-		float yDistance=newY-y;
-		float tan=(float) Math.tan(yDistance/xDistance);
-		float theta=(float)Math.atan(tan);				//angle measure
-		xSpeed=(float) (Math.cos(theta)*actualMovespeed);
-		ySpeed=(float)(Math.sin(theta)*actualMovespeed);
+			float xDistance=newX-x;
+			float yDistance=newY-y;
+			
+			xSpeed = (float) (xDistance / (distance / actualMovespeed));
+			ySpeed = (float) (yDistance / (distance / actualMovespeed));
+//			float tan=(float) Math.tan(yDistance/xDistance);
+//			float theta=(float)Math.atan(tan);				//angle measure
+//			xSpeed=(float) (Math.cos(theta)*actualMovespeed);
+//			ySpeed=(float)(Math.sin(theta)*actualMovespeed);
 		}
 		else{
 			xSpeed=0;
