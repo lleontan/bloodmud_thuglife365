@@ -1,8 +1,7 @@
-package blood_mud.Scripts;
+package Scripts;
 
-import blood_mud.Scripts.Assests.Tree.*;
-import blood_mud.Scripts.Assests.generic_soldier.Tank;
-import blood_mud.Scripts.Assests.generic_soldier.generic_soldier;
+import generic_soldier.Tank;
+import generic_soldier.generic_soldier;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
+import Tree.Tree;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
 	int windowsizex=1000;					//window sizes
 	int windowsizey=600;

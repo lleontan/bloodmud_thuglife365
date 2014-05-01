@@ -1,10 +1,9 @@
-package blood_mud.Scripts;
+package Scripts;
+
+import generic_soldier.Tank;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import blood_mud.Scripts.Assests.generic_soldier.Tank;
-import blood_mud.Scripts.Assests.generic_soldier.generic_soldier;
 
 public class gameController{
 	long[] waveTimer=new long [3];

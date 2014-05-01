@@ -1,4 +1,4 @@
-package blood_mud.Scripts;
+package Scripts;
 
 import java.util.ArrayList;
 

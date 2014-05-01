@@ -1,4 +1,4 @@
-package blood_mud.Scripts;
+package Scripts;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package blood_mud.Scripts;
+package Scripts;
 
 public abstract class Prefab extends cosmeticSprite{
 	//prefab object

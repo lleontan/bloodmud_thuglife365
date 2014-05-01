@@ -1,16 +1,12 @@
-package blood_mud.Scripts.Assests.generic_soldier;
+package generic_soldier;
 import java.io.IOException;
-
-import blood_mud.Scripts.Soldier;
-import blood_mud.Scripts.gameController;
-import blood_mud.Scripts.playerSoldier;
-
-public class Tank extends playerSoldier{
-	public Tank(int x,int y,int height,int width) throws IOException{
+import Scripts.playerSoldier;
+public class generic_soldier extends playerSoldier{
+	public generic_soldier(int x,int y,int height,int width) throws IOException{
 		
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
-		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Tank1.jpg";
+		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Spec.jpg";
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
@@ -74,11 +70,8 @@ public class Tank extends playerSoldier{
 			break;
 		case 6:
 			//shooting
-			
+			executeShoot();
 		case 7:
-			//move to, at bottom because many states have movement
-			
-			//moveTo does seem to change the movespeeds but it isn't
 			if(x<0){
 				movex=200;
 			}
@@ -86,6 +79,9 @@ public class Tank extends playerSoldier{
 				movey=200;
 			}
 			
+			//move to, at bottom because many states have movement
+			
+			//moveTo does seem to change the movespeeds but it isn't 
 			System.out.println("speeds   "+xSpeed+" "+ySpeed+"\nPosition is  "+x+" "+y);
 			moveTo(movex,movey);
 			break;

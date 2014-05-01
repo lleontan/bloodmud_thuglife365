@@ -1,4 +1,4 @@
-package blood_mud.Scripts;
+package Scripts;
 
 public class Rifle extends Gun{
 	public int maxClipSize=15;//size of mag

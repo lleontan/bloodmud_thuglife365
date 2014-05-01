@@ -1,4 +1,4 @@
-package blood_mud.Scripts;
+package Scripts;
 
 public abstract class Weapon {
 	public float effectiveMaxRange;			//don't be afraid to change, move, or add other range and damage variables
