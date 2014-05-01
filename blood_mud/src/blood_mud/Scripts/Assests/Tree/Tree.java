@@ -16,6 +16,6 @@ public class Tree extends Prefab{
 
 	this.height=height;
 	this.width=width;
-	this.defaultImage=app.get_image(assetPath);
+	this.defaultImage=get_image(assetPath);
 		}
 	}

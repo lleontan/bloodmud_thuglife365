@@ -8,6 +8,10 @@ public abstract class Soldier extends SoldierAI{
 	//use abstract classes if you want a soldier to give its own definition,
 	//almost everything a soldier does should have some degree of randomness
 	//example shooting,
+	
+	public ArrayList friendList;
+	public ArrayList enemyList;
+	
 	public float maxMovespeed=2;				//maximum movespeed
 	public float actualMovespeed=maxMovespeed;
 	public float xSpeed=0;			//x and y movespeeds
@@ -40,10 +44,6 @@ public abstract class Soldier extends SoldierAI{
 	public long baseFireTimer[]=new long[4];//in between shoots delay
 	public long reloadTimer[]=new long[4];//reloading timer
 	
-	public Soldier(){
-		//constructor, you can make another one with more arguments if needed
-		
-	}
 	public void generateName(){
 		//seth populate this array
 		String nameArray[]={"s","d"};
@@ -74,35 +74,24 @@ public abstract class Soldier extends SoldierAI{
 			ySpeed=0;
 		}
 	}
-	public class shootAt{
 		//aquires and rotates to target, checks fire type of current weapon, executes weapon fire algorithem. instantiates shell on ground
 		//soldier.shootat.method/variable to use
 		public void tryfireAt(ArrayList list,int targetname){
 			//fix
 			 baseFireTimer[0]-=System.currentTimeMillis();
 			 if(baseFireTimer[0]<0){
-				 baseFireTimer=resetTimer(baseFireTimer,(float) .2);
+				 baseFireTimer=controller.resetTimer(baseFireTimer,(float) .2);
 				 soldierWeapon.shoot();//Executes shoot method
 			 }
-		}
-		public long[] resetTimer(long[]timer,float percentError){
-			//note, use percent error as a decimal
-			timer[0]=System.currentTimeMillis();
-			long difference=(long) (percentError*timer[3]);		//uses base duration to set actual duration
-			
-			long timerRandomness=(long) (Math.random()*(difference*2)+(timer[3]-difference));//gabe check math
-			timer[1]=System.currentTimeMillis()+timerRandomness;
-			timer[0]=timer[1];
-			//make target timer=timer
-			return timer;
 		}
 		public void damageAlgorythem(){
 			//calculates the amount of damage the shot will do
 		}
 		public void executeShoot(){
 			//soldier shooting state machine, call this
-			ArrayList currentUnitList=app.AIUnitlist;
-			ArrayList targetUnitList=app.playerUnitlist;
+			ArrayList currentUnitList=controller.AIUnitlist;
+			ArrayList targetUnitList=controller.playerUnitlist;
+			System.out.println("Shooting at "+targetname);
 			switch(shootingState){
 			case 1:
 				//aim state, rotates, waits for aimtimer
@@ -110,7 +99,7 @@ public abstract class Soldier extends SoldierAI{
 				aquireTimer[0]-=System.currentTimeMillis();
 				if(aquireTimer[0]<0){
 					//end of aiming
-					resetTimer(aquireTimer,0);
+					controller.resetTimer(aquireTimer,0);
 					shootingState=2;
 				}
 				break;
@@ -119,10 +108,10 @@ public abstract class Soldier extends SoldierAI{
 				//excecutes until either a state change or clip runs out
 				
 				if(side==1){
-					targetUnitList=app.AIUnitlist;
+					targetUnitList=controller.AIUnitlist;
 				}
 				else if(side==2){
-					targetUnitList=app.playerUnitlist;
+					targetUnitList=controller.playerUnitlist;
 				}
 				tryfireAt(targetUnitList,targetname);
 				break;
@@ -135,17 +124,18 @@ public abstract class Soldier extends SoldierAI{
 				break;
 			default:
 				//idle state, checks for targets,goes into aim state from here
-
+				System.out.println(currentUnitList.get(0)+"   "+targetUnitList.get(0));
 				
 				if(side==1){
-					currentUnitList= app.playerUnitlist;
-					targetUnitList=app.AIUnitlist;
+					currentUnitList= controller.playerUnitlist;
+					targetUnitList=controller.AIUnitlist;
 				}
 				else if(side==2){
-					currentUnitList=app.AIUnitlist;
-					targetUnitList=app.playerUnitlist;
+					currentUnitList=controller.AIUnitlist;
+					targetUnitList=controller.playerUnitlist;
 				}
-				targetname=app.findListDistance(currentUnitList, targetUnitList, targetname);
+				
+				targetname=controller.findListDistance(currentUnitList, targetUnitList, targetname);
 				if(targetname==-1){
 					
 				}
@@ -155,7 +145,7 @@ public abstract class Soldier extends SoldierAI{
 				break;
 			}
 		}
-	}
+	
 	
 	
 	
@@ -179,6 +169,10 @@ public abstract class Soldier extends SoldierAI{
 		//excecutes the movement
 		x=(int) (x+xSpeed);
 		y=(int) (y+ySpeed);
+	}
+	public void setLists(ArrayList a,ArrayList b){
+		friendList=a;
+		enemyList=b;
 	}
 	}
 

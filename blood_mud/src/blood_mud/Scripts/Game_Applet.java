@@ -1,6 +1,7 @@
 package blood_mud.Scripts;
 
 import blood_mud.Scripts.Assests.Tree.*;
+import blood_mud.Scripts.Assests.generic_soldier.Tank;
 import blood_mud.Scripts.Assests.generic_soldier.generic_soldier;
 
 import java.applet.Applet;
@@ -24,19 +25,15 @@ import javax.imageio.ImageIO;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
 	int windowsizex=1000;					//window sizes
 	int windowsizey=600;
-	int playerlives=10;							//player lives
-	public ArrayList cosmeticList=new ArrayList();			//this is our arraylist of cosmetic battlefield damage(blown up trees)
-	public ArrayList tempCosemeticList=new ArrayList();		//arraylist of temporary battle damage(bullet holes, explosions)
-	public ArrayList AIUnitlist=new ArrayList();				//arraylists of all units on the battlefield, player and ai
-	public ArrayList playerUnitlist=new ArrayList();
-	public ArrayList structureList=new ArrayList();			//arraylist of all structures, ai and player(trees, rocks, trenches)
-	
+	int playerlives=10;
 	public playerSoldier selectedUnit;
 	gameController controller=new gameController();
 	
 	Font font1 = new Font("consolas", Font.PLAIN, 24);			//font
+	public Game_Applet(){
 		
-		public void init(){
+	}	
+	public void init(){
 			setSize(windowsizex, windowsizey);
 			setBackground(Color.GREEN);
 			addKeyListener(this);					//add listeners here
@@ -50,12 +47,20 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		generic_soldier soldier1=new generic_soldier(200,200,70,70);
 		
-		Instantiate(playerUnitlist,soldier1);		//to create a unit call instantiate with
-		Instantiate(structureList,temptree);		//the list and the object you want to create
+
+		Soldier tempSol = new Tank(50, -70, 90, 90);
+		
+		Instantiate(controller.AIUnitlist,tempSol );
+		
+		
+		Instantiate(controller.playerUnitlist,soldier1);		//to create a unit call instantiate with
+		Instantiate(controller.structureList,temptree);		//the list and the object you want to create
 		while(true){
 			//update loop
-			excecuteListAI(playerUnitlist);		//excecute actions for unit AIs, make another one for structure effects
-			excecuteListAI(AIUnitlist);
+			excecuteListAI(controller.playerUnitlist);		//excecute actions for unit AIs, make another one for structure effects
+			excecuteListAI(controller.AIUnitlist);
+			
+			
 			
 			//run gameController here
 			controller.excecuteController();
@@ -79,33 +84,6 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			sol.doMove();				//telling the soldier to move
 		}
 	}
-	public int findListDistance(ArrayList list,ArrayList targetList,int unitIndex){
-		//finds the closest thing in the arraylist
-		//returns the arrayList index
-		
-		//-1 for nothing
-		int size=targetList.size();
-		Soldier sol=(Soldier)list.get(unitIndex);
-		
-		float lowestDistance=-1;
-		int lowestDistanceReference=-1;
-		
-		for(int a=0;a<size;a++){
-			Soldier targetSol=(Soldier)targetList.get(a);
-			
-			//gabe check my distance code
-			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
-			if(a==0){
-				lowestDistance=distance;
-				lowestDistanceReference=targetSol.targetname;
-			}
-			else if(distance<lowestDistance){
-				lowestDistance=distance;
-				lowestDistanceReference=targetSol.targetname;
-			}
-		}
-		return lowestDistanceReference;
-	}
 	public float findDistance(ArrayList list,ArrayList targetList,int shooterName,int targetName){
 		//finds the distance between 2 objects
 		
@@ -119,13 +97,6 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		return distance;
 	}
-	public Image get_image(String url) throws IOException{
-		//gets an image using a given url, can take from internet or file directory
-		File file=new File(url);
-		java.net.URL f=new File(url).toURI().toURL();
-		Image returnImage=ImageIO.read(file);
-		return returnImage;
-	}
 	public void keyPressed(KeyEvent key){}
 	public void keyReleased(KeyEvent key){
 		
@@ -135,15 +106,15 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	public void paint(Graphics paint){
 		//when painting paint background objects first
 		Graphics2D g=(Graphics2D)paint;
-		int tempSize=structureList.size();			//temp variable for preformance reasons
+		int tempSize=controller.structureList.size();			//temp variable for preformance reasons
 		
 		offscreen=createImage(windowsizex,windowsizey);
 		Graphics2D off=(Graphics2D) offscreen.getGraphics();
 		
-		drawList(off,cosmeticList);
-		drawList(off,structureList);
-		drawList(off,AIUnitlist);
-		drawList(off,playerUnitlist);
+		drawList(off,controller.cosmeticList);
+		drawList(off,controller.structureList);
+		drawList(off,controller.AIUnitlist);
+		drawList(off,controller.playerUnitlist);
 		//we're going to use graphics 2d to do all our painting instead of just graphics
 		/*AffineTransform for rotation;
 			
@@ -206,21 +177,32 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		int returnnum = (int)(Math.random()*range+min);
 		return returnnum;
 	}
-	public void Instantiate(ArrayList List,Object obj){
+	public static void Instantiate(ArrayList List,Object obj){
 		//USE THIS TO CREATE OBJECTS
 		cosmeticSprite spri=(cosmeticSprite)obj;
-
-		System.out.println("controller"+controller.getNewName());
-		spri.targetname=controller.getNewName();
+		
+		System.out.println("controller"+gameController.getNewName());
+		spri.targetname=gameController.getNewName();
 		List.add(spri);
 	}
 	public void InstantiateEnemy(Object obj){
 		//USE THIS TO CREATE OBJECTS
-		ArrayList List=AIUnitlist;
+		ArrayList List=controller.AIUnitlist;
 		cosmeticSprite spri=(cosmeticSprite)obj;
 
 		System.out.println("controller"+controller.getNewName());
 		spri.targetname=controller.getNewName();
+		spri=(Soldier)spri;
+		List.add(spri);
+	}
+	public void InstantiatePlayerSoldier(Object obj){
+		//USE THIS TO CREATE OBJECTS
+		ArrayList List=controller.playerUnitlist;
+		cosmeticSprite spri=(cosmeticSprite)obj;
+		
+		System.out.println("controller"+controller.getNewName());
+		spri.targetname=controller.getNewName();
+		spri=(Soldier)spri;
 		List.add(spri);
 	}
 	public void rotatePrefab(float degrees){
@@ -244,7 +226,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		
 		if (buttonPressed==1){
 			//left mouse button
-			int index=col.checkPosition(x,y,playerUnitlist);
+			int index=col.checkPosition(x,y,controller.playerUnitlist);
 			if(index==-1){
 				System.out.println("not finding anything");
 				selectedUnit=null;
@@ -253,7 +235,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 				//there may be a possible issue with our selected unit.
 				//we kinda have to use the selected unit instead of an index
 				//we may need to have a reserved spot in the arraylist for the selected unit
-			selectedUnit=(playerSoldier) playerUnitlist.get(index);
+			selectedUnit=(playerSoldier) controller.playerUnitlist.get(index);
 			System.out.println(selectedUnit.getClass().getName());
 			}
 		}

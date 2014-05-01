@@ -10,13 +10,13 @@ public class Tank extends playerSoldier{
 		
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
-		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Spec.jpg";
+		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Tank1.jpg";
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
 		this.height=height;
 		this.width=width;
-		this.defaultImage=app.get_image(assetPath);
+		this.defaultImage=get_image(assetPath);
 		this.side=1;		//set side for fucking everything
 
 
@@ -42,7 +42,7 @@ public class Tank extends playerSoldier{
 			currentState=2;
 		}
 		else{
-			currentState=7;
+			currentState=6;
 		}
 		
 		//do ai stuff here
@@ -73,12 +73,19 @@ public class Tank extends playerSoldier{
 		case 5:
 			break;
 		case 6:
-			//pinned, cannot fire, moves more slowly, changes sprite to pinned
+			//shooting
 			
 		case 7:
 			//move to, at bottom because many states have movement
 			
-			//moveTo does seem to change the movespeeds but it isn't 
+			//moveTo does seem to change the movespeeds but it isn't
+			if(x<0){
+				movex=200;
+			}
+			if(y<0){
+				movey=200;
+			}
+			
 			System.out.println("speeds   "+xSpeed+" "+ySpeed+"\nPosition is  "+x+" "+y);
 			moveTo(movex,movey);
 			break;

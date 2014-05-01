@@ -16,7 +16,7 @@ public class generic_soldier extends playerSoldier{
 		this.y=y;
 		this.height=height;
 		this.width=width;
-		this.defaultImage=app.get_image(assetPath);
+		this.defaultImage=get_image(assetPath);
 		this.side=1;		//set side for fucking everything
 
 
@@ -42,7 +42,7 @@ public class generic_soldier extends playerSoldier{
 			currentState=2;
 		}
 		else{
-			currentState=7;
+			currentState=6;
 		}
 		
 		//do ai stuff here
@@ -73,9 +73,16 @@ public class generic_soldier extends playerSoldier{
 		case 5:
 			break;
 		case 6:
-			//pinned, cannot fire, moves more slowly, changes sprite to pinned
-			
+			//shooting
+			executeShoot();
 		case 7:
+			if(x<0){
+				movex=200;
+			}
+			if(y<0){
+				movey=200;
+			}
+			
 			//move to, at bottom because many states have movement
 			
 			//moveTo does seem to change the movespeeds but it isn't 
