@@ -9,7 +9,8 @@ public class Tank extends playerSoldier{
 		
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
-		this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Tank1.jpg";
+		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Tank1.jpg";
+
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;

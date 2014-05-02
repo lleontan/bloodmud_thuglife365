@@ -8,7 +8,8 @@ import javax.print.DocFlavor.URL;
 public class Tree extends Scripts.Prefab{
 	public Tree(int x,int y,int width,int height) throws IOException{
 		//constructor
-	this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
+	//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
+	this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\Tree\\treetopdown.jpg";
 	this.x=x;
 	this.y=y;
 

@@ -67,6 +67,9 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		//-1 for nothing
 		int size=targetList.size();
 		Soldier sol=(Soldier)list.get(unitIndex);
+		for(int a=0;a<(Soldier)list.get(a).targetname;a++){
+			
+		}
 		
 		
 		float lowestDistance=-1;
