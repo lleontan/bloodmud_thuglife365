@@ -82,9 +82,9 @@ public abstract class Soldier extends SoldierAI{
 		//soldier.shootat.method/variable to use
 		public void tryfireAt(ArrayList list,int targetname){
 			//fix
-			 baseFireTimer[0]-=System.currentTimeMillis();
-			 if(baseFireTimer[0]<0){
-				 baseFireTimer=controller.resetTimer(baseFireTimer,(float) .2);
+			 baseFireTimer[0]=System.currentTimeMillis();
+			 if(baseFireTimer[0]>baseFireTimer[1]){
+				 baseFireTimer=controller.resetTimer(baseFireTimer,500,(float) .2);
 				 weapon.shoot();//Executes shoot method
 			 }
 		}
@@ -100,10 +100,10 @@ public abstract class Soldier extends SoldierAI{
 			case 1:
 				//aim state, rotates, waits for aimtimer
 				//goes to back to idle or goes to excecute shoot
-				aquireTimer[0]-=System.currentTimeMillis();
-				if(aquireTimer[0]<0){
+				aquireTimer[0]=System.currentTimeMillis();
+				if(aquireTimer[0]<aquireTimer[1]){
 					//end of aiming
-					controller.resetTimer(aquireTimer,0);
+					controller.resetTimer(aquireTimer,500,0);
 					shootingState=2;
 				}
 				break;

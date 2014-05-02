@@ -34,10 +34,10 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		//call this from run
 		//call all other methods from this
 		//Game_Applet.Instantiate( obj);
-		waveTimer[0]-=System.currentTimeMillis();
-		if(waveTimer[0]<0){
+		waveTimer[0]=System.currentTimeMillis();
+		if(waveTimer[0]>waveTimer[1]){
 			sendNewWave();
-			resetTimer(waveTimer,0);
+			resetTimer(waveTimer,10000,0);
 		}
 	}
 	public void sendNewWave() throws IOException{
@@ -48,14 +48,14 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		
 		}
 	}
-	public long[] resetTimer(long[]timer,float percentError){
+	public long[] resetTimer(long[]timer,float duration,float percentError){
 		//note, use percent error as a decimal
 		timer[0]=System.currentTimeMillis();
 		long difference=(long) (percentError*timer[2]);		//uses base duration to set actual duration
 		
 		long timerRandomness=(long) (Math.random()*(difference*2)+(timer[2]-difference));//gabe check math
-		timer[1]=System.currentTimeMillis()+timerRandomness;
-		timer[0]=timer[1];
+		timer[1]=(long) (System.currentTimeMillis()+duration+timerRandomness);
+		
 		//make target timer=timer
 		return timer;
 	}

@@ -44,7 +44,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		try{
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);	//threading stuff
 		Object temptree;							//tree and soldier are for testing purposes
-			temptree = new Tree(20,20,30,30);
+		temptree = new Tree(20,20,30,30);
 		
 		generic_soldier soldier1=new generic_soldier(200,200,70,70);
 		
