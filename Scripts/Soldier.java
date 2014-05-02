@@ -1,5 +1,6 @@
 package Scripts;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 public abstract class Soldier extends SoldierAI{
@@ -8,6 +9,9 @@ public abstract class Soldier extends SoldierAI{
 	//use abstract classes if you want a soldier to give its own definition,
 	//almost everything a soldier does should have some degree of randomness
 	//example shooting,
+	public Soldier(){}
+	
+	public Image altSprites[];
 	
 	public ArrayList friendList;
 	public ArrayList enemyList;
@@ -28,7 +32,7 @@ public abstract class Soldier extends SoldierAI{
 	
 	public int state=-1;			//soldier state
 	public int shootingState=-1;	//soldier shooting statemachine
-	public Weapon soldierWeapon;//Soldiers Weapon
+	public Weapon weapon;//Soldiers Weapon
 	
 	String name="Soldier1";	//we need name generating code
 	String displayName="asdf";//name displayed
@@ -81,7 +85,7 @@ public abstract class Soldier extends SoldierAI{
 			 baseFireTimer[0]-=System.currentTimeMillis();
 			 if(baseFireTimer[0]<0){
 				 baseFireTimer=controller.resetTimer(baseFireTimer,(float) .2);
-				 soldierWeapon.shoot();//Executes shoot method
+				 weapon.shoot();//Executes shoot method
 			 }
 		}
 		public void damageAlgorythem(){

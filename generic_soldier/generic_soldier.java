@@ -1,5 +1,7 @@
 package generic_soldier;
 import java.io.IOException;
+
+import Scripts.Rifle;
 import Scripts.playerSoldier;
 public class generic_soldier extends playerSoldier{
 	public generic_soldier(int x,int y,int height,int width) throws IOException{
@@ -14,7 +16,8 @@ public class generic_soldier extends playerSoldier{
 		this.width=width;
 		this.defaultImage=get_image(assetPath);
 		this.side=1;		//set side for fucking everything
-
+		
+		this.weapon=new Rifle();
 
 		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
 		aquireTimer[1]=(long) .5;

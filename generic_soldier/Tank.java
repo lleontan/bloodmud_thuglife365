@@ -1,7 +1,7 @@
 package generic_soldier;
 import java.io.IOException;
 
-import Scripts.Soldier;
+import Scripts.Rifle;
 import Scripts.playerSoldier;
 
 public class Tank extends playerSoldier{
@@ -19,7 +19,8 @@ public class Tank extends playerSoldier{
 		this.defaultImage=get_image(assetPath);
 		this.side=1;		//set side for fucking everything
 
-
+		this.weapon=new Rifle();
+		
 		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
 		aquireTimer[1]=(long) .5;
 		aquireTimer[2]=(long) .5;
@@ -73,8 +74,8 @@ public class Tank extends playerSoldier{
 		case 5:
 			break;
 		case 6:
-			//shooting
-			
+			executeShoot();
+				
 		case 7:
 			//move to, at bottom because many states have movement
 			
