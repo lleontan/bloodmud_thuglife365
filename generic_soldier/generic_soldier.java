@@ -73,7 +73,7 @@ public class generic_soldier extends playerSoldier{
 			break;
 		case 6:
 			//shooting
-			executeShoot();
+			executeShoot();  
 		case 7:
 			if(x<0){
 				movex=200;
