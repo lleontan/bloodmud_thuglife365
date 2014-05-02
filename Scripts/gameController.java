@@ -83,6 +83,7 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 			
 			//gabe check my distance code
 			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
+			//L
 			if(a==0){
 				lowestDistance=distance;
 				lowestDistanceReference=targetSol.targetname;

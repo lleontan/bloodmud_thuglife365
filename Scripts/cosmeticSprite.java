@@ -16,7 +16,7 @@ public class cosmeticSprite {
 	public boolean invisible_to_player=false;
 	
 	gameController controller;
-	int targetname;
+	int targetname, enemytargetname;
 	public cosmeticSprite(){
 		//targetname=0;
 	}

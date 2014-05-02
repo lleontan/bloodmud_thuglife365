@@ -80,12 +80,12 @@ public abstract class Soldier extends SoldierAI{
 	}
 		//aquires and rotates to target, checks fire type of current weapon, executes weapon fire algorithem. instantiates shell on ground
 		//soldier.shootat.method/variable to use
-		public void tryfireAt(ArrayList list,int targetname){
+		public void tryfireAt(ArrayList list,int enemytargetname){
 			//fix
 			 baseFireTimer[0]=System.currentTimeMillis();
 			 if(baseFireTimer[0]>baseFireTimer[1]){
 				 baseFireTimer=controller.resetTimer(baseFireTimer,500,(float) .2);
-				 weapon.shoot();//Executes shoot method
+				 weapon.shoot(list.get(enemytargetname).x, list.get(enemytargetname).y);//Executes shoot method
 			 }
 		}
 		public void damageAlgorythem(){
@@ -95,7 +95,6 @@ public abstract class Soldier extends SoldierAI{
 			//soldier shooting state machine, call this
 			ArrayList currentUnitList=controller.AIUnitlist;
 			ArrayList targetUnitList=controller.playerUnitlist;
-			System.out.println("Shooting at "+targetname);
 			switch(shootingState){
 			case 1:
 				//aim state, rotates, waits for aimtimer
@@ -117,7 +116,7 @@ public abstract class Soldier extends SoldierAI{
 				else if(side==2){
 					targetUnitList=controller.playerUnitlist;
 				}
-				tryfireAt(targetUnitList,targetname);
+				tryfireAt(targetUnitList,enemytargetname);
 				break;
 			case 3://reloading timer, goes to idle when done
 					//if inturupted then just assume reloading is done
@@ -139,7 +138,7 @@ public abstract class Soldier extends SoldierAI{
 					targetUnitList=controller.playerUnitlist;
 				}
 				
-				targetname=controller.findListDistance(currentUnitList, targetUnitList, targetname);
+				enemytargetname=controller.findListDistance(currentUnitList, targetUnitList, targetname);
 				if(targetname==-1){
 					
 				}
