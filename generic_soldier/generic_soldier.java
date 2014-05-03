@@ -9,6 +9,15 @@ public class generic_soldier extends playerSoldier{
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Spec.jpg";
 		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Spec.jpg";
+		
+		this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\soldierOneFire.jpg";//fire sprite
+		//this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\.jpg";
+		//temporarily commented out
+
+		this.altSprites[1]=get_image(altSpritesPath[1]);
+		this.altSprites[0]=get_image(assetPath);
+		
+		
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
@@ -18,6 +27,9 @@ public class generic_soldier extends playerSoldier{
 		this.side=1;		//set side for fucking everything
 		
 		this.weapon=new Rifle();
+		
+		this.movex=x+1;
+		this.movey=y-30;
 
 		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
 		aquireTimer[1]=(long) .5;
@@ -49,9 +61,9 @@ public class generic_soldier extends playerSoldier{
 		
 		state=currentState;
 
-		System.out.println(state);
+		System.out.println("state is "+state);
 	}
-	public void soldierState(){
+	public void soldierState() throws IOException{
 		//this is the behaviors
 		soldierDecision();
 		switch(state){

@@ -19,9 +19,9 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 	public gameController(){
 		namecount=0;
 		//0 is timer,1 is current duration, 2 is base duration
-		waveTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
-		waveTimer[1]=(long) .5;
-		waveTimer[2]=(long) .5;
+		waveTimer[0]=(long) 1000;	//timers are either in milliseconds or seconds, I forget which
+		waveTimer[1]=(long) 1000;
+		waveTimer[2]=(long) 1000;
 	}
 	
 	public static int namecount=0;//current name index,
@@ -34,38 +34,65 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		//call this from run
 		//call all other methods from this
 		//Game_Applet.Instantiate( obj);
+		System.out.println("Timer"+waveTimer[0]+"   "+waveTimer[1]);
 		waveTimer[0]=System.currentTimeMillis();
 		if(waveTimer[0]>waveTimer[1]){
 			sendNewWave();
-			resetTimer(waveTimer,10000,0);
+			waveTimer[1]=10000+System.currentTimeMillis();
+			//waveTimer=resetTimer(waveTimer,1000,0);
 		}
+		System.out.println("\n\n\n\n\n\n"+AIUnitlist.size()+"\n\n\n\n\n\n\n\n\n");
 	}
 	public void sendNewWave() throws IOException{
-		for(int a=0;a<waveNumber;a++){
-		Soldier tempSol = new Tank(50, -20, 30, 30);
+		System.out.println("New Wave Sent");
+		int spawnnum=(int) (waveNumber*.5+2);
+		if(spawnnum>10){
+			spawnnum=10;
+		}
+		for(int a=0;a<spawnnum;a++){
+		Soldier tempSol = new Tank((int)(Math.random()*500+300), -90, 60, 60);
 		
-		Game_Applet.Instantiate(AIUnitlist,tempSol );
+		Game_Applet.InstantiateEnemy(tempSol );
 		
 		}
+		waveNumber++;
 	}
 	public long[] resetTimer(long[]timer,float duration,float percentError){
+		
+		//NOT WORKING DO NOT USE UNLESS FIXED
+		
+		
+		//REMEMBER THAT THIS METHOD RETURNS A TIMER
+		//IF YOU DON'T HAVE THE TIMER YOU WANT SET TO THIS IT WON'T DO ANYTHING
 		//note, use percent error as a decimal
 		timer[0]=System.currentTimeMillis();
-		long difference=(long) (percentError*timer[2]);		//uses base duration to set actual duration
+		//long difference=(long) ((1-percentError)*timer[2]);		//uses base duration to set actual duration
 		
-		long timerRandomness=(long) (Math.random()*(difference*2)+(timer[2]-difference));//gabe check math
-		timer[1]=(long) (System.currentTimeMillis()+duration+timerRandomness);
+		//long timerRandomness=(long) (Math.random()*(difference*2)+(timer[2]-difference));//gabe check math
+		timer[1]=(long) (System.currentTimeMillis()+duration);
 		
 		//make target timer=timer
 		return timer;
 	}
-
+	public static int findUnitIndex(ArrayList list,int unitname){
+		int returnint=-1;
+		int size=list.size();
+		for(int a=0;a<size;a++){
+			Soldier sol=(Soldier)list.get(a);
+			if(sol.targetname==unitname){
+				returnint=a;
+				break;
+			}
+		}
+		
+		return returnint;
+	}
 	public static int findListDistance(ArrayList list,ArrayList targetList,int unitIndex){
 		//finds the closest thing in the arraylist
 		//returns the arrayList index
 		
 		//-1 for nothing
-		int size=targetList.size();
+		int size=list.size();
 		Soldier sol=null;
 		for(int a=0;a<size;a++){
 			sol=(Soldier)list.get(a);
@@ -78,7 +105,8 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		float lowestDistance=-1;
 		int lowestDistanceReference=-1;
 		
-		for(int a=0;a<size;a++){
+		int targetlistsize=targetList.size();
+		for(int a=0;a<targetlistsize;a++){
 			Soldier targetSol=(Soldier)targetList.get(a);
 			
 			//gabe check my distance code

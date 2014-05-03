@@ -1,6 +1,7 @@
 package generic_soldier;
 import java.io.IOException;
 
+import Scripts.Game_Applet;
 import Scripts.Rifle;
 import Scripts.playerSoldier;
 
@@ -9,8 +10,15 @@ public class Tank extends playerSoldier{
 		
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\treetopdown.jpg";
-		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Tank1.jpg";
+		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\soldier2.jpg";
+		
+		this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\soldier2Fire.jpg";//fire sprite
+		//this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\.jpg";
+		//temporarily commented out
 
+		this.altSprites[1]=get_image(altSpritesPath[1]);
+		this.altSprites[0]=get_image(assetPath);
+		
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
@@ -18,7 +26,12 @@ public class Tank extends playerSoldier{
 		this.width=width;
 		this.defaultImage=get_image(assetPath);
 		this.side=1;		//set side for fucking everything
-
+		
+		this.actualMovespeed=1;
+		
+		this.movex=x;
+		this.movey=Game_Applet.windowsizey+1000;
+		
 		this.weapon=new Rifle();
 		
 		aquireTimer[0]=(long) .5;	//timers are either in milliseconds or seconds, I forget which
@@ -53,7 +66,7 @@ public class Tank extends playerSoldier{
 
 		System.out.println(state);
 	}
-	public void soldierState(){
+	public void soldierState() throws IOException{
 		//this is the behaviors
 		soldierDecision();
 		switch(state){
@@ -84,11 +97,11 @@ public class Tank extends playerSoldier{
 				movex=200;
 			}
 			if(y<0){
-				movey=200;
+				movey=Game_Applet.windowsizey+500;
 			}
 			
-			System.out.println("speeds   "+xSpeed+" "+ySpeed+"\nPosition is  "+x+" "+y);
-			moveTo(movex,movey);
+			System.out.println("speeds   "+xSpeed+" "+ySpeed+"\nPosition is  "+x+" "+y+"\nMove Orders are "+movex+" "+movey);
+			moveTo(movex,movey);			//this caused a really bad error
 			break;
 		default:
 			break;

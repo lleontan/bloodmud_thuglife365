@@ -1,5 +1,8 @@
 package Scripts;
 
+import generic_soldier.BulletHole;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Gun extends Weapon{
@@ -14,12 +17,6 @@ public class Gun extends Weapon{
 		
 	}
 
-	public void shoot() {
-		//do hit algorithm
-		//if hit then call the damage calculator in the Soldier class
-		//
-		
-	}
 
 	public boolean hitAlgorithm(Soldier shooter,Soldier target,int shooterName,int targetName){
 		//checks to see whether or not a shot hit
@@ -41,5 +38,17 @@ public class Gun extends Weapon{
 		//gabe check my distance code
 		float distance=(float) (Math.sqrt(Math.pow(shooter.x-target.x,2)+Math.pow(shooter.y-target.y,2)));
 		return distance;
+	}
+
+	public void shoot (ArrayList list, int targetname, ArrayList targetUnitList, int enemytargetname) throws IOException {
+		int index=gameController.findUnitIndex(list, targetname);
+		int targetindex=gameController.findUnitIndex(targetUnitList, enemytargetname);
+		Soldier targetsol=(Soldier) targetUnitList.get(targetindex);
+		
+		//do stuff here
+		
+		targetUnitList.set(targetindex, targetsol);
+		BulletHole hole = new BulletHole(targetsol.x+10, targetsol.y+10, 5, 5);
+		Game_Applet.Instantiate(gameController.cosmeticList, hole);
 	}
 }
