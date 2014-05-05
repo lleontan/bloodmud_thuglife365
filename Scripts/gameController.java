@@ -38,7 +38,7 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		waveTimer[0]=System.currentTimeMillis();
 		if(waveTimer[0]>waveTimer[1]){
 			sendNewWave();
-			waveTimer[1]=10000+System.currentTimeMillis();
+			waveTimer[1]=15000+System.currentTimeMillis();
 			//waveTimer=resetTimer(waveTimer,1000,0);
 		}
 		System.out.println("\n\n\n\n\n\n"+AIUnitlist.size()+"\n\n\n\n\n\n\n\n\n");

@@ -102,6 +102,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 
 			System.out.println(a+" list index, unit name is "+sol.targetname);
 			System.out.println(sol.y+" "+sol.x+" soldier x and y");
+			sol.checkIfAlive();
 			sol.soldierState();			//calling the soldier decision making
 			sol.doMove();				//telling the soldier to move
 			list.set(a, sol);
@@ -232,8 +233,14 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	public void rotatePrefab(float degrees){
 		//
 	}
-	public void deletePrefab(ArrayList List){
-		
+	public static void deletePrefab(ArrayList list,int unitname){
+		int size=list.size();
+		for(int a=0;a<size;a++){
+			cosmeticSprite spri=(cosmeticSprite) list.get(a);
+			if (spri.targetname==unitname){
+				list.remove(a);
+			}
+		}
 	}
 	public void keyTyped(KeyEvent arg0) {}
 	public void mouseClicked(MouseEvent mouse) {

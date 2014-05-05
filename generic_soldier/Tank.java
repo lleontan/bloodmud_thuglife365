@@ -19,13 +19,19 @@ public class Tank extends playerSoldier{
 		this.altSprites[1]=get_image(altSpritesPath[1]);
 		this.altSprites[0]=get_image(assetPath);
 		
+		;
+		//ALT SPRITE 2 IS DEATH SPRITE
+		this.altSpritesPath[2]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Tank1.jpg";
+		this.altSprites[2]=get_image(altSpritesPath[2]);
+		
+		
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;
 		this.y=y;
 		this.height=height;
 		this.width=width;
 		this.defaultImage=get_image(assetPath);
-		this.side=1;		//set side for fucking everything
+		this.side=2;		//set side for fucking everything
 		
 		this.actualMovespeed=1;
 		
@@ -88,7 +94,7 @@ public class Tank extends playerSoldier{
 			break;
 		case 6:
 			executeShoot();
-				
+			
 		case 7:
 			//move to, at bottom because many states have movement
 			

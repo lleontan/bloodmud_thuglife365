@@ -16,7 +16,9 @@ public class generic_soldier extends playerSoldier{
 
 		this.altSprites[1]=get_image(altSpritesPath[1]);
 		this.altSprites[0]=get_image(assetPath);
-		
+		//ALT SPRITE 2 IS DEATH SPRITE
+		this.altSpritesPath[2]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Tank1.jpg";
+		this.altSprites[2]=get_image(altSpritesPath[2]);
 		
 		//do not ever use pngs, use jpgs or more compressed file types for preformance
 		this.x=x;

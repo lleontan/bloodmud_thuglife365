@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import Tree.bloodSprite;
+
 public abstract class Soldier extends SoldierAI{
 	//this is a soldier class, all soldiers inherit from this class
 	
@@ -81,6 +83,17 @@ public abstract class Soldier extends SoldierAI{
 			xSpeed=0;
 			ySpeed=0;
 		}
+		switch(shootingState){
+		//case 1:
+		case 2:
+		case 3:
+		//case 4:
+			this.xSpeed=0;
+			this.ySpeed=0;
+			break;
+		default:
+			break;
+		}
 	}
 		//aquires and rotates to target, checks fire type of current weapon, executes weapon fire algorithem. instantiates shell on ground
 		//soldier.shootat.method/variable to use
@@ -97,8 +110,35 @@ public abstract class Soldier extends SoldierAI{
 		public void damageAlgorythem(){
 			//calculates the amount of damage the shot will do
 		}
+		boolean killTimerLock=false;
+		long killTimer[]=new long[4];
+		public void checkIfAlive(){
+			if(this.health<1){
+				this.defaultImage=this.altSprites[2];
+				if(killTimerLock=false){
+					killTimerLock=true;
+					killTimer[0]=System.currentTimeMillis();
+					killTimer[1]=System.currentTimeMillis()+4000;
+				}
+				if(killTimerLock==true){
+					killTimer[0]=System.currentTimeMillis();
+					if(killTimer[0]>killTimer[1]){
+						ArrayList list=new ArrayList();
+						if(side==1){
+							list=controller.playerUnitlist;
+						}
+						else{
+							list=controller.AIUnitlist;
+						}
+						Game_Applet.deletePrefab(list,this.targetname);
+					}
+				}
+			}
+			
+		}
 		public void executeShoot() throws IOException{
 			//soldier shooting state machine, call this
+			
 
 			ArrayList currentUnitList=controller.playerUnitlist;
 			ArrayList targetUnitList = controller.AIUnitlist;
@@ -124,7 +164,7 @@ public abstract class Soldier extends SoldierAI{
 				if(aquireTimer[0]>aquireTimer[1]){
 					//end of aiming
 					System.out.println(aquireTimer[1]+"asdfasdfasdfasdfasdf");
-					aquireTimer[1]=System.currentTimeMillis()+500;
+					aquireTimer[1]=System.currentTimeMillis()+500+(int)(Math.random()*200);
 					
 					shootingState=2;
 				}
@@ -132,12 +172,13 @@ public abstract class Soldier extends SoldierAI{
 			case 2:
 				//excecute shoot, calls the child classes shooting method inherited from weapon shooting class
 				//excecutes until either a state change or clip runs out
+
 				
 				tryfireAt(currentUnitList,targetname,targetUnitList,enemytargetname);
 				if(this.currentClip<=0){
 					this.shootingState=3;
 
-					this.reloadTimer[1]=System.currentTimeMillis()+1000;
+					this.reloadTimer[1]=System.currentTimeMillis()+1000+(int)(Math.random()*300);
 				}
 				this.defaultImage=altSprites[1];
 				break;
@@ -146,7 +187,7 @@ public abstract class Soldier extends SoldierAI{
 				this.reloadTimer[0]=System.currentTimeMillis();
 				this.defaultImage=altSprites[0];
 				if(reloadTimer[0]>reloadTimer[1]){
-					reloadTimer[1]=System.currentTimeMillis()+600;
+					reloadTimer[1]=System.currentTimeMillis()+600+(int)(Math.random()*200);
 					shootingState=-1;
 				}
 				break;
@@ -183,8 +224,10 @@ public abstract class Soldier extends SoldierAI{
 	
 	
 	
-	public void damage(int ammount){
+	public void damage(int ammount) throws IOException{
 		health=health-ammount;
+		bloodSprite blood=new bloodSprite(this.x+Gun.randomRange(),this.y+Gun.randomRange(),30,30);
+		Game_Applet.Instantiate(gameController.cosmeticList, blood);
 		if(health<-30){
 			//excecute gib command and kill command
 		}
@@ -207,5 +250,5 @@ public abstract class Soldier extends SoldierAI{
 		friendList=a;
 		enemyList=b;
 	}
-	}
+}
 

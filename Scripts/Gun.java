@@ -46,9 +46,28 @@ public class Gun extends Weapon{
 		Soldier targetsol=(Soldier) targetUnitList.get(targetindex);
 		
 		//do stuff here
+		boolean ishit=false;
+		int hit=(int) (Math.random()*100);//we're going to temporarily use a straight percentage
+		if(hit>80){
+			targetsol.damage(30);
+			
+		}
 		
 		targetUnitList.set(targetindex, targetsol);
-		BulletHole hole = new BulletHole(targetsol.x+10, targetsol.y+10, 5, 5);
+		BulletHole hole = new BulletHole(targetsol.x+randomRange(), targetsol.y+randomRange(), 5, 5);
 		Game_Applet.Instantiate(gameController.cosmeticList, hole);
+	}
+	public static int randomRange(){
+		int posneg=(int) (Math.random()*2+1);
+		if(posneg==1){
+			posneg=-1;
+		}
+		else if(posneg==2){
+			posneg=1;
+		}
+		else{System.out.println("shit gone wrong with randomRange");}
+		int returnnum=(int) (posneg*Math.random()*60+10);
+		return returnnum;
+		
 	}
 }
