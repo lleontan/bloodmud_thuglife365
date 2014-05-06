@@ -108,7 +108,6 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			sol.soldierState();			//calling the soldier decision making
 			sol.doMove();				//telling the soldier to move
 			list.set(a, sol);
-			size--;
 			//list.set(a, sol);
 			}
 		}
