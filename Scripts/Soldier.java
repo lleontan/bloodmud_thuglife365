@@ -148,7 +148,7 @@ public abstract class Soldier extends SoldierAI{
 
 			ArrayList currentUnitList=controller.playerUnitlist;
 			ArrayList targetUnitList = controller.AIUnitlist;
-				if(side==1){
+			if(side==1){
 				currentUnitList=controller.playerUnitlist;
 				targetUnitList=controller.AIUnitlist;}
 			else if(side==2){
@@ -158,7 +158,7 @@ public abstract class Soldier extends SoldierAI{
 			}
 			if(shootingState>0&shootingState<3){
 				this.rotation=rotateToPosition(targetUnitList,enemytargetname);
-			}	
+			}
 			
 				
 				System.out.println("Shooting state is "+shootingState);

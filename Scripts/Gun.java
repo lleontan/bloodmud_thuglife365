@@ -41,32 +41,22 @@ public class Gun extends Weapon{
 	}
 
 	public void shoot (ArrayList list, int targetname, ArrayList targetUnitList, int enemytargetname) throws IOException {
+		
+		try{
 		int index=gameController.findUnitIndex(list, targetname);
 		int targetindex=gameController.findUnitIndex(targetUnitList, enemytargetname);
-		Soldier targetsol=(Soldier) targetUnitList.get(0);
+		Soldier targetsol=(Soldier) targetUnitList.get(targetindex);
 		Soldier yoursol=(Soldier)list.get(index);
-		try{
-		targetsol=(Soldier) targetUnitList.get(targetindex);
-		}
-		catch(ArrayIndexOutOfBoundsException e){
-			if(targetUnitList.size()>0){
-			targetsol=(Soldier) targetUnitList.get(0);}
-			else{
-				
-			}
-		}
+		
+		
+		
 		//do stuff here
 		boolean ishit=false;
 		int hit=(int) (Math.random()*100);//we're going to temporarily use a straight percentage
 		if(hit<(yoursol.rifle)){
 			targetsol.damage(30);
-			
 		}
-		try{
-		targetUnitList.set(targetindex, targetsol);}
-		catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("ArrayIndexOutOfBoundsException");
-		}
+		targetUnitList.set(targetindex, targetsol);
 		targetsol.shotAtCount++;
 		int suppressed=(int)Math.random()*100;
 		int suppressionF=(int) (.5*targetsol.morale);
@@ -76,6 +66,13 @@ public class Gun extends Weapon{
 		
 		BulletHole hole = new BulletHole(targetsol.x+randomRange(), targetsol.y+randomRange(), 5, 5);
 		Game_Applet.Instantiate(gameController.cosmeticList, hole);
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			if(targetUnitList.size()>0){
+			//targetsol=(Soldier) targetUnitList.get(0);
+			}
+			else{}
+		}
 	}
 	public static int randomRange(){
 		int posneg=(int) (Math.random()*2+1);

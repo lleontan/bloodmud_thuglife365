@@ -25,8 +25,8 @@ import javax.imageio.ImageIO;
 import Tree.Leaf1;
 import Tree.Tree;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
-	int windowsizex=1000;					//window sizes
-	public static int windowsizey=600;
+	int windowsizex=900;					//window sizes
+	public static int windowsizey=800;
 	int playerlives=10;
 	public playerSoldier selectedUnit;
 	gameController controller=new gameController();
@@ -40,7 +40,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	}	
 	public void init(){
 			setSize(windowsizex, windowsizey);
-			setBackground(Color.GREEN);
+			setBackground(Color.WHITE);
 			addKeyListener(this);					//add listeners here
 			addMouseListener(this);
 	}
@@ -63,10 +63,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		generic_soldier soldier3=new generic_soldier(400,450,70,70);
 		generic_soldier soldier4=new generic_soldier(300,500,70,70);
 
-		Soldier tempSol = new Tank(50, -70, 90, 90);
-		tempSol.setMoveOrders(100, 100);
+		//Soldier tempSol = new Tank(50, -70, 90, 90);
+		//tempSol.setMoveOrders(100, 100);
 		
-		Instantiate(controller.AIUnitlist,tempSol );
+		//Instantiate(controller.AIUnitlist,tempSol );
 
 		Instantiate(controller.playerUnitlist,soldier2);
 		Instantiate(controller.playerUnitlist,soldier3);
@@ -98,6 +98,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		//excecutes the AI state machines of all units in the given arraylist
 		int size=list.size();
 		for(int a=0;a<size;a++){
+			size=list.size();
 			Soldier sol=(Soldier)list.get(a);
 
 			System.out.println(a+" list index, unit name is "+sol.targetname);
