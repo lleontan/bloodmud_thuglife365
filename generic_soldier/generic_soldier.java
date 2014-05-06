@@ -29,6 +29,7 @@ public class generic_soldier extends playerSoldier{
 		this.side=1;		//set side for fucking everything
 		
 		this.weapon=new Rifle();
+		this.rifle=15;
 		
 		this.movex=x+1;
 		this.movey=y-30;
@@ -67,7 +68,17 @@ public class generic_soldier extends playerSoldier{
 	}
 	public void soldierState() throws IOException{
 		//this is the behaviors
+		if(this.isSuppressed==false){
 		soldierDecision();
+		}
+		else{
+			int unsuppressed=(int) (Math.random()*100);
+			if(unsuppressed<25){
+				this.isSuppressed=false;
+			}
+			this.state=3;
+		}
+		
 		switch(state){
 		//state machine for soldier ai
 		case 1:
@@ -80,6 +91,12 @@ public class generic_soldier extends playerSoldier{
 			ySpeed=0;
 			break;
 		case 3:
+			//suppressed state
+			System.out.println("Is Suppressed");
+			
+			this.xSpeed=this.xSpeed/2;
+			this.ySpeed=this.ySpeed/2;
+			moveTo(movex,movey);
 			break;
 		case 4:
 			break;

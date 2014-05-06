@@ -17,6 +17,8 @@ public abstract class Soldier extends SoldierAI{
 	}
 	int currentClip=0;
 	
+	int shotAtCount=0;//number of times shot at in the last 5 seconds
+	
 	public Image altSprites[]=new Image[4];
 	public String altSpritesPath[]=new String[4];
 	
@@ -43,6 +45,7 @@ public abstract class Soldier extends SoldierAI{
 	
 	String displayName="asdf";//name displayed
 	
+	public boolean isSuppressed=false;
 	int arrayIndex;	//used for finding in an arrayList
 	/*
 	public long aquireTimer[]=new long[4];//0 is timer, 1 is timer end, 2 is current duration, 3 is base duration
@@ -107,15 +110,17 @@ public abstract class Soldier extends SoldierAI{
 				 this.currentClip--;
 			 }
 		}
-		public void damageAlgorythem(){
-			//calculates the amount of damage the shot will do
+		public void resetShotCount(){
 		}
 		boolean killTimerLock=false;
 		long killTimer[]=new long[4];
 		public void checkIfAlive(){
+			
+			System.out.println("checking if alive");
 			if(this.health<1){
+				System.out.println("is dead");
 				this.defaultImage=this.altSprites[2];
-				if(killTimerLock=false){
+				if(killTimerLock==false){
 					killTimerLock=true;
 					killTimer[0]=System.currentTimeMillis();
 					killTimer[1]=System.currentTimeMillis()+4000;
@@ -130,6 +135,7 @@ public abstract class Soldier extends SoldierAI{
 						else{
 							list=controller.AIUnitlist;
 						}
+						isDead=true;
 						Game_Applet.deletePrefab(list,this.targetname);
 					}
 				}
@@ -150,8 +156,10 @@ public abstract class Soldier extends SoldierAI{
 				targetUnitList=controller.playerUnitlist;
 				
 			}
-				
-				
+			if(shootingState>0&shootingState<3){
+				this.rotation=rotateToPosition(targetUnitList,enemytargetname);
+			}	
+			
 				
 				System.out.println("Shooting state is "+shootingState);
 			switch(shootingState){
@@ -159,7 +167,6 @@ public abstract class Soldier extends SoldierAI{
 				//aim state, rotates, waits for aimtimer
 				//goes to back to idle or goes to excecute shoot
 				aquireTimer[0]=System.currentTimeMillis();
-
 				this.defaultImage=altSprites[1];
 				if(aquireTimer[0]>aquireTimer[1]){
 					//end of aiming
@@ -178,6 +185,7 @@ public abstract class Soldier extends SoldierAI{
 				if(this.currentClip<=0){
 					this.shootingState=3;
 
+					this.currentClip=weapon.clipSize;
 					this.reloadTimer[1]=System.currentTimeMillis()+1000+(int)(Math.random()*300);
 				}
 				this.defaultImage=altSprites[1];
@@ -213,13 +221,34 @@ public abstract class Soldier extends SoldierAI{
 					System.out.println("target is aquired");
 				}
 				else{
-					aquireTimer[1]=System.currentTimeMillis()+500;
+					aquireTimer[1]=(long) (System.currentTimeMillis()+500+Math.random()*200);
+					
 					shootingState=1;
+					
 				}
 				break;
 			}
 		}
-	
+	public float rotateToPosition(ArrayList list,int enemytargetname){
+		float theta=0;
+		int size=list.size();
+		for(int a=0;a<size;a++){
+			Soldier sol=(Soldier) list.get(a);
+			if(sol.targetname==enemytargetname){
+				int x2=sol.x;
+				int y2=sol.y;
+				float xdis=x2-this.x;
+				float ydis=y2-this.y;
+				float tan=ydis/xdis;
+				theta=(float) Math.atan(tan);
+				break;
+			}
+		}
+		
+		//theta=0;
+		System.out.println("The rotation is "+theta);
+		return theta;
+	}
 	
 	
 	

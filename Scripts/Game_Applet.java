@@ -103,10 +103,13 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			System.out.println(a+" list index, unit name is "+sol.targetname);
 			System.out.println(sol.y+" "+sol.x+" soldier x and y");
 			sol.checkIfAlive();
+			if(sol.isDead==false){
 			sol.soldierState();			//calling the soldier decision making
 			sol.doMove();				//telling the soldier to move
 			list.set(a, sol);
+			size--;
 			//list.set(a, sol);
+			}
 		}
 	}
 	public float findDistance(ArrayList list,ArrayList targetList,int shooterName,int targetName){
@@ -154,7 +157,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		int tempSize=list.size();		//we're doing forloops with temp variables for preformance
 		for(int a=0;a<tempSize;a++){
 			cosmeticSprite cos=(cosmeticSprite) list.get(a);//getting the transform and sprite
-			if(cos.invisible_to_player==false){//some enemies may be invis to player
+			if(cos.invisible_to_player==false&&cos.isDead==false){//some enemies may be invis to player
 			int x1=(int)cos.x;		//temp variables
 			int y1=(int)cos.y;
 			int height=cos.height;
@@ -172,6 +175,12 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			
 			AffineTransform newform=new AffineTransform();
 			//use this for rotating, scaling, transforming ect
+			
+			//newform.setToRotation(cos.rotation);
+			//newform.rotate(cos.rotation);
+			//newform.rotate(cos.rotation, cos.x+.5*cos.width, cos.y+.5*cos.height);
+			newform.setToRotation(cos.rotation, cos.x+.5*cos.width, cos.y+.5*cos.height);
+			cos.rotation=0;
 			
 			newform.translate(x1, y1);	//we should change this so that the affine transforms are held by the
 										//cosmetic sprite object, do it later when we finish everything else
@@ -238,7 +247,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		for(int a=0;a<size;a++){
 			cosmeticSprite spri=(cosmeticSprite) list.get(a);
 			if (spri.targetname==unitname){
+				System.out.println("Unit Deleted");
 				list.remove(a);
+				break;
 			}
 		}
 	}

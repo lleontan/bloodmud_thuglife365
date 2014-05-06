@@ -107,18 +107,21 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 		
 		int targetlistsize=targetList.size();
 		for(int a=0;a<targetlistsize;a++){
-			Soldier targetSol=(Soldier)targetList.get(a);
 			
-			//gabe check my distance code
-			float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
-			//L
-			if(a==0){
-				lowestDistance=distance;
-				lowestDistanceReference=targetSol.targetname;
-			}
-			else if(distance<lowestDistance){
-				lowestDistance=distance;
-				lowestDistanceReference=targetSol.targetname;
+			Soldier targetSol=(Soldier)targetList.get(a);
+			if(targetSol.isDead==true||targetSol.invisible_to_player==true){}
+			else{
+				//gabe check my distance code
+				float distance=(float) (Math.sqrt(Math.pow(sol.x-targetSol.x,2)+Math.pow(sol.y-targetSol.y,2)));
+				//L
+				if(a==0){
+					lowestDistance=distance;
+					lowestDistanceReference=targetSol.targetname;
+				}
+				else if(distance<lowestDistance){
+					lowestDistance=distance;
+					lowestDistanceReference=targetSol.targetname;
+				}
 			}
 		}
 		return lowestDistanceReference;

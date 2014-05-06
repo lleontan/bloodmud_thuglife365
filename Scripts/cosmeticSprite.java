@@ -15,6 +15,9 @@ public class cosmeticSprite {
 	public Image defaultImage;
 	public boolean invisible_to_player=false;
 	
+
+	boolean isDead=false;
+	public float rotation=0;
 	gameController controller;
 	int targetname, enemytargetname;
 	public cosmeticSprite(){

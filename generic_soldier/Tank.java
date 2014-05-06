@@ -74,7 +74,16 @@ public class Tank extends playerSoldier{
 	}
 	public void soldierState() throws IOException{
 		//this is the behaviors
-		soldierDecision();
+		if(this.isSuppressed==false){
+			soldierDecision();
+			}
+			else{
+				int unsuppressed=(int) (Math.random()*100);
+				if(unsuppressed<25){
+					this.isSuppressed=false;
+				}
+				this.state=3;
+			}
 		switch(state){
 		//state machine for soldier ai
 		case 1:
@@ -87,6 +96,12 @@ public class Tank extends playerSoldier{
 			ySpeed=0;
 			break;
 		case 3:
+			//suppressed state
+			System.out.println("Is Suppressed");
+			
+			this.xSpeed=this.xSpeed/2;
+			this.ySpeed=this.ySpeed/2;
+			moveTo(movex,movey);
 			break;
 		case 4:
 			break;
