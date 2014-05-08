@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 
 import Tree.Leaf1;
 import Tree.Tree;
+import Tree.pauseButton;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
 	int windowsizex=900;					//window sizes
 	public static int windowsizey=800;
@@ -41,6 +42,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	public void init(){
 			setSize(windowsizex, windowsizey);
 			setBackground(Color.WHITE);
+			
 			addKeyListener(this);					//add listeners here
 			addMouseListener(this);
 	}
@@ -48,32 +50,38 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		try{
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);	//threading stuff
 		cosmeticSprite temptree;							//tree and soldier are for testing purposes
-		temptree = new Tree(20,20,30,30);
+		//temptree = new Tree(20,20,30,30);
 		
-		
+		/*
 		int Leafnum=(int) (Math.random()*10+5);
 		for(int a=0;a<Leafnum;a++){
 			Leaf1 l=new Leaf1((int)(Math.random()*300+100),(int) (Math.random()*300+100),20,20);
 			Instantiate(controller.cosmeticList,l);
-		}
+		}*/
+		pauseButton pause=new pauseButton(30,30,45,45);
 		
 		
-		generic_soldier soldier1=new generic_soldier(600,500,70,70);
-		generic_soldier soldier2=new generic_soldier(500,500,70,70);
-		generic_soldier soldier3=new generic_soldier(400,450,70,70);
-		generic_soldier soldier4=new generic_soldier(300,500,70,70);
+		generic_soldier soldier1=new generic_soldier(600,this.windowsizey,70,70);
+		generic_soldier soldier2=new generic_soldier(500,this.windowsizey,70,70);
+		generic_soldier soldier3=new generic_soldier(400,this.windowsizey,70,70);
+		generic_soldier soldier4=new generic_soldier(300,this.windowsizey,70,70);
 
+		soldier1.setMoveOrders(soldier1.x, soldier1.y-100);
+		soldier2.setMoveOrders(soldier2.x, soldier2.y-120);
+		soldier3.setMoveOrders(soldier3.x, soldier3.y-120);
+		soldier4.setMoveOrders(soldier4.x, soldier4.y-100);
 		//Soldier tempSol = new Tank(50, -70, 90, 90);
 		//tempSol.setMoveOrders(100, 100);
 		
 		//Instantiate(controller.AIUnitlist,tempSol );
-
+		Instantiate(controller.structureList,pause);
+		
 		Instantiate(controller.playerUnitlist,soldier2);
 		Instantiate(controller.playerUnitlist,soldier3);
 		Instantiate(controller.playerUnitlist,soldier4);
 		
 		Instantiate(controller.playerUnitlist,soldier1);		//to create a unit call instantiate with
-		Instantiate(controller.structureList,temptree);		//the list and the object you want to create
+		//Instantiate(controller.structureList,temptree);		//the list and the object you want to create
 		while(true){
 			//update loop
 			excecuteListAI(controller.playerUnitlist);		//excecute actions for unit AIs, make another one for structure effects
