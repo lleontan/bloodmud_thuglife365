@@ -26,8 +26,8 @@ import Tree.Leaf1;
 import Tree.Tree;
 import Tree.pauseButton;
 public class Game_Applet extends Applet implements Runnable,KeyListener,MouseListener{
-	int windowsizex=900;					//window sizes
-	public static int windowsizey=800;
+	int windowsizex=700;					//window sizes
+	public static int windowsizey=600;
 	int playerlives=10;
 	public playerSoldier selectedUnit;
 	gameController controller=new gameController();
@@ -61,10 +61,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 		pauseButton pause=new pauseButton(30,30,45,45);
 		
 		
-		generic_soldier soldier1=new generic_soldier(600,this.windowsizey,70,70);
-		generic_soldier soldier2=new generic_soldier(500,this.windowsizey,70,70);
-		generic_soldier soldier3=new generic_soldier(400,this.windowsizey,70,70);
-		generic_soldier soldier4=new generic_soldier(300,this.windowsizey,70,70);
+		generic_soldier soldier1=new generic_soldier(200,this.windowsizey,45,45);
+		generic_soldier soldier2=new generic_soldier(500,this.windowsizey,45,45);
+		generic_soldier soldier3=new generic_soldier(400,this.windowsizey,45,45);
+		generic_soldier soldier4=new generic_soldier(300,this.windowsizey,45,45);
 
 		soldier1.setMoveOrders(soldier1.x, soldier1.y-100);
 		soldier2.setMoveOrders(soldier2.x, soldier2.y-120);
@@ -104,22 +104,37 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 	}
 	public void excecuteListAI(ArrayList list) throws IOException{
 		//excecutes the AI state machines of all units in the given arraylist
+		
 		int size=list.size();
 		for(int a=0;a<size;a++){
+			//try{
 			size=list.size();
-			Soldier sol=(Soldier)list.get(a);
+			Soldier sol;
+			if(a>size){
+				break;
+			}
+			sol=(Soldier)list.get(a);//some sort of error here
 
+			
+		
 			System.out.println(a+" list index, unit name is "+sol.targetname);
 			System.out.println(sol.y+" "+sol.x+" soldier x and y");
 			sol.checkIfAlive();
 			if(sol.isDead==false){
-			sol.soldierState();			//calling the soldier decision making
-			sol.doMove();				//telling the soldier to move
-			list.set(a, sol);
-			//list.set(a, sol);
+				sol.soldierState();			//calling the soldier decision making
+				sol.doMove();				//telling the soldier to move
+				list.set(a, sol);
+				//list.set(a, sol);
 			}
+			}
+			/*catch(IndexOutOfBoundsException e){
+				
+				System.out.println("shit went wrong at excecuting list AI");
+			}*/
+			
 		}
-	}
+		
+	
 	public float findDistance(ArrayList list,ArrayList targetList,int shooterName,int targetName){
 		//finds the distance between 2 objects
 		

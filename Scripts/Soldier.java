@@ -217,13 +217,27 @@ public abstract class Soldier extends SoldierAI{
 				}
 				
 				enemytargetname=controller.findListDistance(currentUnitList, targetUnitList, targetname);
+				
 				if(enemytargetname==-1){
-					System.out.println("target is aquired");
+					System.out.println("target is not aquired");
+					
 				}
 				else{
-					aquireTimer[1]=(long) (System.currentTimeMillis()+500+Math.random()*200);
-					
-					shootingState=1;
+					int size=targetUnitList.size();
+					for(int a=0;a<size;a++){
+						Soldier tempsol=(Soldier) targetUnitList.get(a);
+						if(tempsol.targetname==enemytargetname){
+							float distance=(float) (Math.sqrt(Math.pow(tempsol.x-x,2)+Math.pow(tempsol.y-y,2)));
+
+							System.out.println("distance check is "+distance+" "+this.weapon.MaxRange);
+							if(distance<this.weapon.MaxRange){
+							System.out.println("idle state stopped");
+							aquireTimer[1]=(long) (System.currentTimeMillis()+500+Math.random()*1200);
+							
+							shootingState=1;
+							}
+						}
+					}
 					
 				}
 				break;

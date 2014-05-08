@@ -29,7 +29,7 @@ public class generic_soldier extends playerSoldier{
 		this.side=1;		//set side for fucking everything
 		
 		this.weapon=new Rifle();
-		this.rifle=15;
+		this.rifle=35;
 		
 		this.movex=x+1;
 		this.movey=y-30;

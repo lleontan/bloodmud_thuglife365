@@ -1,10 +1,7 @@
 package Scripts;
-
 import generic_soldier.Tank;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 public class gameController{
 	long[] waveTimer=new long [3];
 	int waveNumber=0;
@@ -41,7 +38,7 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 			waveTimer[1]=15000+System.currentTimeMillis();
 			//waveTimer=resetTimer(waveTimer,1000,0);
 		}
-		System.out.println("\n\n\n\n\n\n"+AIUnitlist.size()+"\n\n\n\n\n\n\n\n\n");
+		System.out.println("\n\n\n"+AIUnitlist.size()+"\n\n\n\n\n\n");
 	}
 	public void sendNewWave() throws IOException{
 		System.out.println("New Wave Sent");
@@ -50,7 +47,7 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 			spawnnum=10;
 		}
 		for(int a=0;a<spawnnum;a++){
-		Soldier tempSol = new Tank((int)(Math.random()*500+300), -90, 60, 60);
+		Soldier tempSol = new Tank((int)(Math.random()*450+50), -90, 60, 60);
 		
 		Game_Applet.InstantiateEnemy(tempSol );
 		
@@ -100,8 +97,6 @@ static public ArrayList structureList=new ArrayList();			//arraylist of all stru
 				break;
 			}
 		}
-		
-		
 		float lowestDistance=-1;
 		int lowestDistanceReference=-1;
 		
