@@ -171,7 +171,7 @@ public abstract class Soldier extends SoldierAI{
 				if(aquireTimer[0]>aquireTimer[1]){
 					//end of aiming
 					System.out.println(aquireTimer[1]+"asdfasdfasdfasdfasdf");
-					aquireTimer[1]=System.currentTimeMillis()+500+(int)(Math.random()*200);
+					aquireTimer[1]=System.currentTimeMillis()+500+(int)(Math.random()*1000);
 					
 					shootingState=2;
 				}
@@ -254,7 +254,7 @@ public abstract class Soldier extends SoldierAI{
 				float xdis=x2-this.x;
 				float ydis=y2-this.y;
 				float tan=ydis/xdis;
-				theta=(float) Math.atan(tan);
+				theta=(float) ((float) Math.atan(tan)+((-90*Math.PI)/180));
 				break;
 			}
 		}

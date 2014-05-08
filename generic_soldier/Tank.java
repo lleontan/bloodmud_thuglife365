@@ -34,6 +34,7 @@ public class Tank extends playerSoldier{
 		this.side=2;		//set side for fucking everything
 		
 		this.actualMovespeed=1;
+		this.naturalRotation=180;
 		
 		this.movex=x;
 		this.movey=Game_Applet.windowsizey+1000;

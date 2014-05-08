@@ -110,7 +110,7 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			//try{
 			size=list.size();
 			Soldier sol;
-			if(a>size){
+			if(a>=size){
 				break;
 			}
 			sol=(Soldier)list.get(a);//some sort of error here
@@ -202,7 +202,10 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 			//newform.setToRotation(cos.rotation);
 			//newform.rotate(cos.rotation);
 			//newform.rotate(cos.rotation, cos.x+.5*cos.width, cos.y+.5*cos.height);
-			newform.setToRotation(cos.rotation, cos.x+.5*cos.width, cos.y+.5*cos.height);
+			float degreesToRadians=(float) (Math.PI/180);
+			float degreemeasure=cos.rotation;
+			degreemeasure=degreemeasure+degreesToRadians*cos.naturalRotation;
+			newform.setToRotation(degreemeasure, cos.x+.5*cos.width, cos.y+.5*cos.height);
 			cos.rotation=0;
 			
 			newform.translate(x1, y1);	//we should change this so that the affine transforms are held by the
@@ -300,7 +303,27 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 				//there may be a possible issue with our selected unit.
 				//we kinda have to use the selected unit instead of an index
 				//we may need to have a reserved spot in the arraylist for the selected unit
-			selectedUnit=(playerSoldier) controller.playerUnitlist.get(index);
+				
+				selectedUnit=(playerSoldier) controller.playerUnitlist.get(index);
+			}
+			int cosmeticListIndex=col.checkPosition(x, y,controller.structureList);
+			if(cosmeticListIndex==-1){}
+			else{
+				cosmeticSprite selectedCosmetic= (cosmeticSprite) controller.structureList.get(cosmeticListIndex);
+				if(selectedCosmetic.displayname.equalsIgnoreCase("PauseButton")){
+					generic_soldier soldier;
+					try {
+						soldier = new generic_soldier((int) (Math.random()*400+100),this.windowsizey,45,45);
+					
+
+					soldier.setMoveOrders(soldier.x, (int) (soldier.y-120+(Math.random()*30)));
+					Instantiate(controller.playerUnitlist,soldier);
+					} 
+					catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		if(buttonPressed==3){
@@ -309,6 +332,9 @@ public class Game_Applet extends Applet implements Runnable,KeyListener,MouseLis
 				//fix selected
 				selectedUnit.setMoveOrders(x, y);
 			}
+		}
+		if(buttonPressed==2){
+			
 		}
 	}
 	public void mouseEntered(MouseEvent mouse) {
