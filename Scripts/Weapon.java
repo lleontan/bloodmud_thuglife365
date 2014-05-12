@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Weapon {
+	public float MaxRange = 500;
 	public float effectiveMaxRange;			//don't be afraid to change, move, or add other range and damage variables
 	public float effectiveMinRange;
 	public float minDamage;					//add in a critical hit chance against AI soldiers?

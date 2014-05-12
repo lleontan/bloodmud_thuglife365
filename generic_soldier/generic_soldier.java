@@ -8,7 +8,7 @@ public class generic_soldier extends playerSoldier{
 		
 		//constructor
 		//this.assetPath="C:\\Users\\Janet\\git\\blood and mud\\blood_mud\\src\\blood_mud\\Scripts\\Assests\\generic_soldier\\Spec.jpg";
-		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\Spec.jpg";
+		this.assetPath="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\soldierTwo.jpg";
 		
 		this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\soldierOneFire.jpg";//fire sprite
 		//this.altSpritesPath[1]="C:\\Users\\Leon Tan\\git\\blood\\bloodmud_thuglife365\\generic_soldier\\.jpg";
@@ -29,7 +29,7 @@ public class generic_soldier extends playerSoldier{
 		this.side=1;		//set side for fucking everything
 		
 		this.weapon=new Rifle();
-		this.rifle=15;
+		this.rifle=35;
 		
 		this.movex=x+1;
 		this.movey=y-30;

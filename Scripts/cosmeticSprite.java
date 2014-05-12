@@ -15,11 +15,12 @@ public class cosmeticSprite {
 	public Image defaultImage;
 	public boolean invisible_to_player=false;
 	
-
+	public float naturalRotation=0;
 	boolean isDead=false;
 	public float rotation=0;
 	gameController controller;
 	int targetname, enemytargetname;
+	public String displayname="asdf";
 	public cosmeticSprite(){
 		//targetname=0;
 	}

@@ -171,7 +171,7 @@ public abstract class Soldier extends SoldierAI{
 				if(aquireTimer[0]>aquireTimer[1]){
 					//end of aiming
 					System.out.println(aquireTimer[1]+"asdfasdfasdfasdfasdf");
-					aquireTimer[1]=System.currentTimeMillis()+500+(int)(Math.random()*200);
+					aquireTimer[1]=System.currentTimeMillis()+500+(int)(Math.random()*1000);
 					
 					shootingState=2;
 				}
@@ -217,13 +217,27 @@ public abstract class Soldier extends SoldierAI{
 				}
 				
 				enemytargetname=controller.findListDistance(currentUnitList, targetUnitList, targetname);
+				
 				if(enemytargetname==-1){
-					System.out.println("target is aquired");
+					System.out.println("target is not aquired");
+					
 				}
 				else{
-					aquireTimer[1]=(long) (System.currentTimeMillis()+500+Math.random()*200);
-					
-					shootingState=1;
+					int size=targetUnitList.size();
+					for(int a=0;a<size;a++){
+						Soldier tempsol=(Soldier) targetUnitList.get(a);
+						if(tempsol.targetname==enemytargetname){
+							float distance=(float) (Math.sqrt(Math.pow(tempsol.x-x,2)+Math.pow(tempsol.y-y,2)));
+
+							System.out.println("distance check is "+distance+" "+this.weapon.MaxRange);
+							if(distance<this.weapon.MaxRange){
+							System.out.println("idle state stopped");
+							aquireTimer[1]=(long) (System.currentTimeMillis()+500+Math.random()*1200);
+							
+							shootingState=1;
+							}
+						}
+					}
 					
 				}
 				break;
@@ -240,7 +254,7 @@ public abstract class Soldier extends SoldierAI{
 				float xdis=x2-this.x;
 				float ydis=y2-this.y;
 				float tan=ydis/xdis;
-				theta=(float) Math.atan(tan);
+				theta=(float) ((float) Math.atan(tan)+((-90*Math.PI)/180));
 				break;
 			}
 		}

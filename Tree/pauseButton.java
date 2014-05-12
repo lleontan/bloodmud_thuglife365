@@ -15,6 +15,7 @@ public class pauseButton extends Scripts.Prefab{
 
 	this.height=height;
 	this.width=width;
+	this.displayname="PauseButton";
 	this.defaultImage=get_image(assetPath);
 		}
 	}
